@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="algorithm," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言最近想好好学学国外的cs课程，就从algorithm开始吧，这里是cmu Fall 2020 15-451&#x2F;651: Algorithms。 lecture 1 Introduction and Strassen’s Algorithm Asymptotic complexity 渐进复杂度，大O(&lt;&#x3D;)、小o(&lt;)、Ω(&gt;&#x3D;)、Θ(&#x3D;),w(&gt;) 一般我们分析算法更关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="algorithm_part1">
+<meta property="og:url" content="http://yoursite.com/2021/01/08/algorithm_part1/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="前言最近想好好学学国外的cs课程，就从algorithm开始吧，这里是cmu Fall 2020 15-451&#x2F;651: Algorithms。 lecture 1 Introduction and Strassen’s Algorithm Asymptotic complexity 渐进复杂度，大O(&lt;&#x3D;)、小o(&lt;)、Ω(&gt;&#x3D;)、Θ(&#x3D;),w(&gt;) 一般我们分析算法更关">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111165237.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111170015.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111211453.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111211553.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112122754.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112122806.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112112229.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112112250.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112153640.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112164438.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112164638.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112165049.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112175740.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112175749.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113215834.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113215901.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113215949.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220151.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220352.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220725.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220641.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220847.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113221043.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113221240.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114161213.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114162859.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114162909.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114163109.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114163547.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113144720.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113150041.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113152118.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113153906.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113162929.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113170351.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113170405.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114200055.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114200641.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114201112.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114201124.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114202309.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114202351.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114210132.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115113620.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115113705.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115113715.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115144526.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115155606.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115175156.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115175233.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210118210611.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210118210626.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210118210636.png">
+<meta property="article:published_time" content="2021-01-08T12:16:20.000Z">
+<meta property="article:modified_time" content="2021-01-18T13:07:40.960Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111165237.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/08/algorithm_part1/"/>
+
+
+
+
+
+  <title>algorithm_part1 | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/08/algorithm_part1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">algorithm_part1</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-01-08T20:16:20+08:00">
+                2021-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cmu-course/" itemprop="url" rel="index">
+                    <span itemprop="name">cmu_course</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近想好好学学国外的cs课程，就从algorithm开始吧，这里是cmu Fall 2020 15-451/651: Algorithms。</p>
+<h2 id="lecture-1-Introduction-and-Strassen’s-Algorithm"><a href="#lecture-1-Introduction-and-Strassen’s-Algorithm" class="headerlink" title="lecture 1 Introduction and Strassen’s Algorithm"></a>lecture 1 Introduction and Strassen’s Algorithm</h2><ul>
+<li>Asymptotic complexity<ul>
+<li>渐进复杂度，大O(&lt;=)、小o(&lt;)、Ω(&gt;=)、Θ(=),w(&gt;)</li>
+<li>一般我们分析算法更关心Θ而不是上界</li>
+<li>通过求极限确定渐进符号，一个有用的结论$lim_{n\to\infty}\frac{(log n)^k}{n}=0$</li>
+</ul>
+</li>
+<li>Strassen’s Alogirthm<ul>
+<li>第一个时间复杂度低于$O(n^3)$的矩阵乘法算法,用来介绍时间复杂度还真不错</li>
+<li>对比<ul>
+<li>常规计算和简单分块递归的时间复杂度均为$O(n^3)$，空间复杂度$O(n^2)$</li>
+<li>Strassen’s Alogirthm的时间复杂度为$O(n^{log_2 7})<ul>
+<li>tree of recursive calls：常用来计算递归的复杂度</li>
+</ul>
+</li>
+<li>对于普通的递归，有8个小矩阵的运算而strassen只有7个，所以后者更快</li>
+</ul>
+</li>
+<li>特性分析<ul>
+<li>当n&gt;10000时该算法效果才比常规计算快，所以对于递归后产生的小规模矩阵可以采取常规计算加快速度</li>
+<li>空间复杂度<ul>
+<li>如果计算s1-s7使用不同的空间，递归计算出来的空间复杂度是$O(n^{log_2 7})$，比$O(n^2)$大</li>
+<li>使用相同的空间的空间复杂度是$O(n^2)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Recurrences and how to solve them<ul>
+<li>两个基本问题<ul>
+<li>递归到较小规模后如何处理：采取常量级别的其他简单方法</li>
+<li>当n不满足一定的条件怎么办？(比如merge sort中n不为2的幂)：一般来说我们不用关心这个，我们只用考虑满足条件的n，如果n不满足条件，我们可以证明处理规模为n的问题时间复杂度与所求的通用的时间复杂度是常数量接近的关系</li>
+</ul>
+</li>
+<li>几种常见的方法<ul>
+<li>unrolling：展开，简单直观</li>
+<li>guess and inductive proof:猜想，归纳证明，很数学</li>
+<li>recursion tree：好用<ul>
+<li><img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111165237.png" alt></li>
+<li>一个简单的推导$a^{log_b n}=b^{(log_b a)(log_b n)}=n^{log_b a}$</li>
+</ul>
+</li>
+<li>master formula:这真是我见过最好的理解了<ul>
+<li><img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111170015.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-2-dynamic-programming-1"><a href="#lecture-2-dynamic-programming-1" class="headerlink" title="lecture 2 dynamic programming 1"></a>lecture 2 dynamic programming 1</h2><ul>
+<li>basic idea<ul>
+<li>常用于需要指数级算法解决问题的场景，将问题的时间复杂度降低到$O(n^2)/O(n^3)$</li>
+<li>类似分治法，将大问题变成多个子问题，不同点在于dp的子问题通常有重合的部分</li>
+<li>具体思路：将问题分解成一定量的子问题，针对每个子问题求它的最优解以得到更大问题的最优解</li>
+<li>根据思路，我们逆向推得：如果一个问题可以分解成求子问题的最优解，那我们就可以考虑用dp策略了</li>
+</ul>
+</li>
+<li>Longest Common Subsequence<ul>
+<li>简介：长度为m、n的两个序列</li>
+<li>问题包括两部分：lcs的长度/lcs本身，对于后者逆向分析即可</li>
+<li>引出两种动态规划，试图写出O(mn)的算法<ul>
+<li>bottom-up dp</li>
+<li>top-down dp (memoized)</li>
+<li>其实差别不大，能写出直观的代码就行</li>
+</ul>
+</li>
+<li>extension<ul>
+<li>an equivalent problem:”minimum edit distance”,e.g diff command.<ul>
+<li>|S|−LCS(S, T) deletes and |T|−LCS(S, T)inserts</li>
+</ul>
+</li>
+<li>很多涉及到序列的问题本质上都可以用dp作为解决方案</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The Knapsack Problem<ul>
+<li>简介：n个事件，对应单独的cost和vaule，总cost为S，求最大vaule，这里的cost是整数</li>
+<li>问题：最大结果/解决方案(逆向分析)</li>
+<li>两种：背包问题可/不可按比例得分<ul>
+<li>前者：贪心算法</li>
+<li>后者：dp,本质上是决定背包事件有还是没有，即0/1两种状态，从而写递推公式V(k,B)</li>
+<li>策略：top-down dp (memoized)；复杂度：O(n*S)</li>
+</ul>
+</li>
+<li>extension<ul>
+<li>如果存在cost为小数??</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Optimal Binary Search Trees<ul>
+<li>简介：二叉搜索树，节点有序，每个节点对应搜索频率，搜索都是成功搜索，求最优二叉搜索树</li>
+<li>本质：每个最优二叉搜索树的子树为最优二叉搜索树，选取不同的点作为根节点即可</li>
+<li>出于二叉搜索树的性质以及以上思路，令$c_{i,j}$表示$key_i$到$key_j$最优子结构产生的cost</li>
+<li>时间复杂度：$O(n^3)$</li>
+</ul>
+</li>
+<li>tree dp<ul>
+<li>简介：对于一个树，选取点的子集使得点的权重之和最大且不存在两个点为某条边的两个端点</li>
+<li>思路：类似背包问题，本质上是点的0/1状态问题，不同的地方在于由于是树，所以考虑从根节点出发写递归公式</li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-3-Dynamic-Programming-II"><a href="#lecture-3-Dynamic-Programming-II" class="headerlink" title="lecture 3 Dynamic Programming II"></a>lecture 3 Dynamic Programming II</h2><ul>
+<li>简介<ul>
+<li>using dp on path-finding problems in graphs，这里是研究几个最短路径问题，根据源节点和目的节点的类型有所不同，针对的都是有向图(无向图没啥意义)</li>
+<li>无向图(一般没有多重边)、有向图(部分算法在最短路径中允许负权重的边，始终不允许负权重的环)、入度/出度</li>
+<li>这里用n表示点数、m表示边数</li>
+</ul>
+</li>
+<li>单源最短路径问题<ul>
+<li>Dijkstra’s algorithm</li>
+<li>The Bellman-Ford Algorithm</li>
+</ul>
+</li>
+<li>全源最短路径问题<ul>
+<li>调用n次Bellman-Ford Algorithm</li>
+<li>调用n次Dijkstra’s algorithm</li>
+<li>借助dp<ul>
+<li>Matrix Products</li>
+<li>Floyd-Warshall</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Dijkstra’s algorithm<ul>
+<li>针对单源最短路径</li>
+<li>限制：边为正权重</li>
+<li>证明方法：数学归纳法</li>
+<li>时间复杂度<ul>
+<li>邻接表：O($n^2+m$)，适用于稀疏图</li>
+<li>普通堆：O($(m+n)logn$),每条边处理一次，每次入堆一次(m),每个点出堆一次(n)</li>
+<li>斐波拉契堆：O(m+nlogn)(…)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The Bellman-Ford Algorithm<ul>
+<li>对比Dijkstra’s algorithm<ul>
+<li>都是对边做松弛操作，Dijkstra’s以贪心法选取未被处理的具有最小权值的节点，然后对其的出边进行松弛操作；而Bellman-Ford Algorithm简单地对所有边进行松弛操作</li>
+<li>可以适用于负权重的边,可以判断是否存在负权重的环</li>
+<li>时间复杂度O(mn)</li>
+</ul>
+</li>
+<li>实现以及如何判断负权重的环<ul>
+<li>常见思路：对所有的边进行(n-1)次松弛操作，再做一次松弛操作判断负环</li>
+<li>dp：<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111211453.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210111211553.png" alt></li>
+<li>找出负权重的环<ul>
+<li>记录parent关系</li>
+<li>利用d[v] = d[x] +len(x, v)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Matrix Products<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112122754.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112122806.png" alt></li>
+<li>Floyd-Warshall<ul>
+<li>不再对边做松弛操作，而是对路径进行dp，处理过程与边的权值无关，因此可以处理负权重的边</li>
+<li>dist_k(u, v) = length shortest path u → v using only points ≤ k,dist_n(u, v)为最终结果</li>
+<li>对所有的disk_n(u,u)作非负检测即可判断是否有负环</li>
+<li>Floyd-Warshall runs in time Θ($n^3$)and space Θ($n^2$)</li>
+</ul>
+</li>
+<li>Dijkstra’s algorithm<ul>
+<li>主要是得解决负权重问题(如果有负权重的边),需要想办法把负权重的边预处理<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112112229.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112112250.png" alt></li>
+</ul>
+</li>
+<li>TSP问题：从一个城市出发，遍历所有的城市一次后回到原点，求最短距离<ul>
+<li>naive：(n-1)!</li>
+<li>dp:<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112153640.png" alt></li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-4-Introduction-to-Max-Flow"><a href="#lecture-4-Introduction-to-Max-Flow" class="headerlink" title="lecture 4 Introduction to Max Flow"></a>lecture 4 Introduction to Max Flow</h2><ul>
+<li>Max Flow<ul>
+<li>方法：Ford-Fulkerson</li>
+<li>简介<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112164438.png" alt></li>
+<li>思路：Residual Graph and Augumenting Path<ul>
+<li>残差图：<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112164638.png" alt></li>
+<li>增广路径是指残差图中从s到t的路径</li>
+<li>算法实现<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112165049.png" alt></li>
+<li>结论<ul>
+<li>如果网络中的流量为整数，最终结果为F，算法时间复杂度为O(F(m+n))<ul>
+<li>dfs/bfs求路径的时间复杂度为O(m+n)<ul>
+<li>其实与实现有关，时间复杂度包括访问顶点和边两部分</li>
+</ul>
+</li>
+<li>算法时间复杂度可能是非多项式时间表示的算法</li>
+</ul>
+</li>
+<li>如果流量是有理数，算法存在时间上界；如果是无理数，算法很有可能无法结束</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Max-Flow Min-Cut<ul>
+<li>用来证明Ford-Fulkerson的正确性</li>
+<li>注意此处对connected的理解<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112175740.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210112175749.png" alt></li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-5-Amortized-Analysis"><a href="#lecture-5-Amortized-Analysis" class="headerlink" title="lecture 5 Amortized Analysis"></a>lecture 5 Amortized Analysis</h2><ul>
+<li>用处<ul>
+<li>The motivation for amortized analysis is that looking at the worst-case time per operation can be too pessimistic if the only way to produce an expensive operation is to “set it up” with a large number of cheap operations beforehand</li>
+<li>简而言之，如果产生一个复杂的操作之前需要一系列简单的操作，我们可以均摊分析这些操作的耗时(一般是常数量)，而不是单纯只分析最坏的情况，这里的均摊分析并不是针对输入做概率上的平均分析，而是对上述的多次操作做均摊分析</li>
+</ul>
+</li>
+<li>均摊分析的三种方式，根据需要使用<ul>
+<li>聚类分析：所有操作的耗时除以操作的次数，比较直接</li>
+<li>银行家分析：类似于记账，对不同的操作做记录，多存少补</li>
+<li>势能函数分析：将银行家分析具体化，提出势能函数</li>
+</ul>
+</li>
+<li>聚类分析<ul>
+<li>A Binary Counter<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113215834.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113215901.png" alt></li>
+<li>Growing a Table<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113215949.png" alt></li>
+</ul>
+</li>
+<li>银行家分析<ul>
+<li>同样是 Binary Counter<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220151.png" alt></li>
+</ul>
+</li>
+<li>势能函数分析<ul>
+<li>原理<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220352.png" alt></li>
+<li>关键<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220725.png" alt></li>
+<li>同样是 Binary Counter<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220641.png" alt></li>
+<li>同样是 Growing a Table<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113220847.png" alt></li>
+<li>Growing and Shrinking a Table<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113221043.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113221240.png" alt></li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-6-Splay-trees"><a href="#lecture-6-Splay-trees" class="headerlink" title="lecture 6 Splay trees"></a>lecture 6 Splay trees</h2><ul>
+<li>a binary search tree (BST)<ul>
+<li>对于bst，如果它相对比较平衡，我们搜索一个元素的复杂度是O(log n),但是如果它不够平衡，复杂度就变为O(n),所以我们要考虑的就是如何以较低的时间复杂度平衡bst</li>
+<li>如果插入的序列是随机的，bst的平均高度是O(log n),效果其实是很好的<ul>
+<li>先求en的递推式，然后数学归纳法<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114161213.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>关于维持平衡的两个角度<ul>
+<li>动态方法：将访问到的元素x放到一个新的位置方便下次访问</li>
+<li>静态方法：根据访问概率静态存放所有的元素</li>
+<li>实例：访问list<ul>
+<li>move-to-front lists (MTF): after an access to x, move x to the front of the list</li>
+<li>compute access frequencies and sort the list accordingly</li>
+<li>结论：对于MTF，we have an amortized cost twice the cost in the optimal static list</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>基于动态的角度，引入Splay trees<ul>
+<li>有自己特有的rotation，每次将访问的节点转移到根节点处。这是splay tree的本质特征</li>
+<li>均摊分析<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114162859.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114162909.png" alt></li>
+<li>结论<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114163109.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114163547.png" alt></li>
+<li>对于插入，合并，删除，均摊复杂度均为O(log n)级别<ul>
+<li>插入：先查找再插入；合并：先splay再合并；删除：先splay到根节点然后删除合并</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="homework-1"><a href="#homework-1" class="headerlink" title="homework 1"></a>homework 1</h2><ul>
+<li>矩阵乘法最小乘积次数问题：多个矩阵相乘求最小product次数</li>
+<li>求有向图最小路径权重乘积<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113144720.png" alt></li>
+<li>旅行者问题改编<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113150041.png" alt></li>
+<li>打包问题<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113152118.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113153906.png" alt><ul>
+<li>我勉强能信服！</li>
+</ul>
+</li>
+<li>Hall’s Marriage<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113162929.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113170351.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210113170405.png" alt></li>
+<li>binary counter改编<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114200055.png" alt></li>
+<li>一个新的数据结构，针对数组插入复杂度过高而链表查找复杂度过高<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114200641.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114201112.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114201124.png" alt></li>
+<li>Cyclic Splaying<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114202309.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114202351.png" alt></li>
+<li>Balls in Bins进一步理解势能函数和均摊分析<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210114210132.png" alt></li>
+<li>回文数问题<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115113620.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115113705.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115113715.png" alt></li>
+<li>Error-Correcting Parsing<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115144526.png" alt></li>
+<li>子图问题,理解矩阵乘积的作用，k-clique<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115155606.png" alt></li>
+<li>涂色问题<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115175156.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210115175233.png" alt></li>
+<li>max flow<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210118210611.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210118210626.png" alt>)<img src="/2021/01/08/algorithm_part1/QQ%E6%88%AA%E5%9B%BE20210118210636.png" alt></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/08/cmu_algorithm/" rel="next" title="cmu_algorithm">
+                <i class="fa fa-chevron-left"></i> cmu_algorithm
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/01/15/algorithm_part2/" rel="prev" title="algorithm_part2">
+                algorithm_part2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-1-Introduction-and-Strassen’s-Algorithm"><span class="nav-number">1.1.</span> <span class="nav-text">lecture 1 Introduction and Strassen’s Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-2-dynamic-programming-1"><span class="nav-number">1.2.</span> <span class="nav-text">lecture 2 dynamic programming 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-3-Dynamic-Programming-II"><span class="nav-number">1.3.</span> <span class="nav-text">lecture 3 Dynamic Programming II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-4-Introduction-to-Max-Flow"><span class="nav-number">1.4.</span> <span class="nav-text">lecture 4 Introduction to Max Flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-5-Amortized-Analysis"><span class="nav-number">1.5.</span> <span class="nav-text">lecture 5 Amortized Analysis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-6-Splay-trees"><span class="nav-number">1.6.</span> <span class="nav-text">lecture 6 Splay trees</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#homework-1"><span class="nav-number">1.7.</span> <span class="nav-text">homework 1</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

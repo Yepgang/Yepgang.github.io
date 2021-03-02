@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hadoop," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Hadoop Fundamental初识Hadoop引入问题问题出现：数据量越来越大，如何存储和分析ZB-EB-PB-TB-GB-MB-KB-B-bit矛盾点：磁盘的读写速度的提高跟不上磁盘容量的增大,例如一个1TB的硬盘一般读写速度是100MB&#x2F;s，读完整个硬盘的时间约为2.5个小时解决方案：磁盘分布式读写  将数据存在多个硬盘上，同时读写 出错处理 如何正确处理分布式的数据  hadoop概述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop Fundamental">
+<meta property="og:url" content="http://yoursite.com/2021/03/01/bigdata_foundmental/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="Hadoop Fundamental初识Hadoop引入问题问题出现：数据量越来越大，如何存储和分析ZB-EB-PB-TB-GB-MB-KB-B-bit矛盾点：磁盘的读写速度的提高跟不上磁盘容量的增大,例如一个1TB的硬盘一般读写速度是100MB&#x2F;s，读完整个硬盘的时间约为2.5个小时解决方案：磁盘分布式读写  将数据存在多个硬盘上，同时读写 出错处理 如何正确处理分布式的数据  hadoop概述">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929151521.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929155847.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929160537.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929160813.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201003093733.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201003093757.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201003093828.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201003095712.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027100829.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027095010.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027103256.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027135002.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027141208.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027141155.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027201156.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027215411.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201028093442.png">
+<meta property="og:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201028093500.png">
+<meta property="article:published_time" content="2021-03-01T07:16:20.000Z">
+<meta property="article:modified_time" content="2021-03-02T11:33:36.185Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="hadoop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929151521.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/03/01/bigdata_foundmental/"/>
+
+
+
+
+
+  <title>Hadoop Fundamental | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/03/01/bigdata_foundmental/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hadoop Fundamental</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-01T15:16:20+08:00">
+                2021-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hadoop%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/" itemprop="url" rel="index">
+                    <span itemprop="name">hadoop权威指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Hadoop-Fundamental"><a href="#Hadoop-Fundamental" class="headerlink" title="Hadoop Fundamental"></a>Hadoop Fundamental</h1><h2 id="初识Hadoop"><a href="#初识Hadoop" class="headerlink" title="初识Hadoop"></a>初识Hadoop</h2><h3 id="引入问题"><a href="#引入问题" class="headerlink" title="引入问题"></a>引入问题</h3><p>问题出现：数据量越来越大，如何存储和分析<br>ZB-EB-PB-TB-GB-MB-KB-B-bit<br>矛盾点：磁盘的读写速度的提高跟不上磁盘容量的增大,例如一个1TB的硬盘一般读写速度是100MB/s，读完整个硬盘的时间约为2.5个小时<br>解决方案：磁盘分布式读写</p>
+<ul>
+<li>将数据存在多个硬盘上，同时读写</li>
+<li>出错处理</li>
+<li>如何正确处理分布式的数据</li>
+</ul>
+<h3 id="hadoop概述"><a href="#hadoop概述" class="headerlink" title="hadoop概述"></a>hadoop概述</h3><ul>
+<li>mapreduce:基本上是一个批处理系统，处理整个数据集或数据集的绝大部分，适用于离线使用场景</li>
+<li>YARN:hadoop II中提出的集群资源管理系统，允许除mapreduce之外的分布式程序在hadoop数据集上操作，促进了hadoop工作模式的发展</li>
+<li>hadoop的一些新的工作模式<ul>
+<li>交互式sql(hive)：在hadoop上获得sql低延时查询的同时保持对大数据规模的可拓展性</li>
+<li>迭代处理(spark)：将中间结果保存至内存而不是硬盘</li>
+<li>流式处理(storm、spark streaming):无边界数据流</li>
+<li>搜索：solr搜索平台，对文件建立索引</li>
+</ul>
+</li>
+<li>对比其他系统<ul>
+<li>对比RDBMS(虽然最近二者的区别越来越小了)<ul>
+<li>RDBMS受限于磁盘的读写速度，无法处理超大数据集，不能进行线性的横向拓展；而mapreduce可以进行线性的横向拓展，以处理超大数据集</li>
+<li>mapreduce基于本身的特性，适合以批处理方式处理整个数据集，进行特定的分析，所以适合一次写入多次读取；而RDBMS适合处理多次读写操作</li>
+<li>二者处理的数据结构化程度不同。RDBMS常用于处理结构化数据，而hadoop对半结构化和非结构化数据很有效，因为后者在处理数据时才对数据进行解释(减少了数据加载的开销，便于处理日志这种非结构化数据)</li>
+</ul>
+</li>
+<li>hadoop设计目标<ul>
+<li>在可接受的时间内完成任务</li>
+<li>运行于同一个内部有高速网络连接的数据中心</li>
+<li>数据中心内的机器可靠</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="mapreduce"><a href="#mapreduce" class="headerlink" title="mapreduce"></a>mapreduce</h2><p>e.g.分析每年的最高温度</p>
+<ul>
+<li>对于一个世纪的数据，常规的脚本文件运行时间太长<ul>
+<li>for 循环</li>
+<li>echo -ne ‘basename $year .gz’ “\t”</li>
+<li>awk end模块</li>
+</ul>
+</li>
+<li>假设在一个机器里并行分析，数据分块和结果合并是一个问题，即使这样运行时间还是过长</li>
+<li>考虑在多个机器并行运行分析，如何保证协调性和可靠性，这时mapreduce派上用场</li>
+</ul>
+<p>A example:<img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929151521.png" alt></p>
+<ul>
+<li>每个阶段都是以键-值对作为输入输出</li>
+<li>map函数的输入key为文件的行偏移量，这里忽略</li>
+<li>具体实现<ul>
+<li>准备在idea里面装个hadoop插件直接进行一手偷懒(一开始插件版本还有问题…)</li>
+<li>job控制整个作业的运行，setjarbyclass帮助集群确定jar文件的名称</li>
+<li>fileinput/outputformat控制输入输出，输入可以有多个</li>
+<li>map的输出类型与reduce的输入类型一般相同，不同时需要显示设定；reduce的输出类型需要显示设定</li>
+</ul>
+</li>
+</ul>
+<p><strong>scale out</strong></p>
+<ul>
+<li>job:map task + reduce task</li>
+<li>数据-&gt;等长分片spilt-&gt;map task-&gt;sort/partion/copy/merge(shuffle)-&gt;reduce<ul>
+<li>原理：对划分后的数据并行处理通常比直接处理所有的数据快</li>
+</ul>
+</li>
+<li>划分规律<ul>
+<li>如果划分的数据块太大，速度可能会不理想；如果划分的块太小，管理小的数据块和map task的创建会占用大量的时间</li>
+<li>spilt大小一般为the size of an HDFS block, which is 128 MB by default。保证每个spilt存在一个节点上，有效利用map任务的数据本地最优性</li>
+</ul>
+</li>
+<li>在执行maptask时根据spilt的位置和node的空闲情况有三种可能：本地数据、本地机架、跨机架</li>
+<li>map将中间数据写入本地磁盘；reduce输出数据到hdfs；因为map的中间结果用完就可以删了，没必要实现可靠存储</li>
+<li>reduce的数量是独立指定的<br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929155847.png" alt><br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929160537.png" alt><br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20200929160813.png" alt></li>
+</ul>
+<p><strong>combiner func</strong><br>mapoutput-&gt;combiner func-&gt;reduceinput<br>相当于对mapreduce的输出做一个预处理，减少map和reduce之间的数据传输量 </p>
+<p><strong>hadoop streaming</strong><br>Hadoop provides an <strong>API</strong> to MapReduce that allows you to write your map and reduce functions in languages other than Java. Hadoop Streaming uses Unix standard streams as the interface between Hadoop and your program, so you can use any language that can read standard input and write to standard output to write your MapReduce program</p>
+<h2 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h2><p>advantage:</p>
+<ul>
+<li>large files</li>
+<li>streaming data: write one &amp; read more</li>
+<li>commodity hardware(容错率高)</li>
+</ul>
+<p>disadvantage：</p>
+<ul>
+<li>Low-latency data access:针对高数据吞吐量应用，延迟较高/hbase</li>
+<li>Lots of small files:存储的文件总数受限于namenode的内存大小</li>
+<li>Multiple writers, arbitrary file modifications：只支持单个写入者，而且写操作总是以“只添加”的方式在文件末尾写数据</li>
+</ul>
+<h3 id="concepts"><a href="#concepts" class="headerlink" title="concepts"></a>concepts</h3><p>disk block：磁盘进行读写的基本单位，一般512kb，文件系统构建于磁盘块之上<br>hdfs block：128m(default)；</p>
+<ul>
+<li>大：减少seek时间,以磁盘传输速率操作block；过大：降低了文件处理的并行性，运行时间反而增大</li>
+<li>利于分布式存储</li>
+<li>方便子系统存储、管理，每个块都是固定大小</li>
+<li>便于出错处理</li>
+</ul>
+<p>namenode/datanode</p>
+<ul>
+<li><p>namenode: 存储并管理datanode，<strong>the namespace image and the edit log / block location</strong></p>
+<ul>
+<li>The namenode manages the filesystem namespace. It maintains the filesystem tree and the metadata for all the files and directories in the tree</li>
+</ul>
+</li>
+<li><p>datenode：存储block，定期向namenode汇报block信息</p>
+</li>
+<li><p>namenode实现ha的重要性不言而喻</p>
+<ul>
+<li>back up： The usual configuration choice is to write metadata to local disk as well as a remote NFS mount.</li>
+<li>a secondary namenode：cold模式<ul>
+<li>The secondary namenode usually runs on a separate physical machine because it requires plenty of CPU and as much memory as the namenode to perform the merge</li>
+<li>the state of the secondary namenode lags that of the primary</li>
+<li>The usual course of action in this case is to copy the namenode’s metadata files that are on NFS to the secondary and run it as the new primary.通常会有data loss</li>
+<li>恢复步骤：<ul>
+<li>加载namespace image</li>
+<li>重载edit log</li>
+<li>收集datanode的信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>block caching</p>
+<ul>
+<li>将存在disk的block缓存到内存中，增加对它的读写性能</li>
+<li>Users or applications instruct the namenode which files to cache (and for how long) by adding a cache directive to a cache pool</li>
+</ul>
+<p>HDFS Federation</p>
+<ul>
+<li>namenode所在节点的存储能力限制了namenode的大小，考虑使用多个namenode</li>
+<li>Under federation, each namenode manages a namespace volume, which is made up of the metadata for the namespace, and a block pool containing all the blocks for the files in the namespace.</li>
+<li>多个namenode之间相互独立</li>
+<li>To access a federated HDFS cluster, clients use client-side mount tables to map file paths to namenodes.This is managed in configuration using ViewFileSystem and the viewfs:// URIs.</li>
+</ul>
+<h3 id="HDFS-high-availability-HA-namenode-datanode"><a href="#HDFS-high-availability-HA-namenode-datanode" class="headerlink" title="HDFS high availability(HA):namenode/datanode"></a>HDFS high availability(HA):namenode/datanode</h3><p><strong>namenode ha</strong><br>secondary namenode：hot模式</p>
+<ul>
+<li>日志文件完全同步<ul>
+<li>引入了QJM：The QJM is a dedicated HDFS implementation, designed for the sole purpose of providing a highly available edit log, and is the recommended choice for most HDFS installations.The QJM only allows one namenode to write to the edit log at one time;</li>
+</ul>
+</li>
+<li>同步接收datanode的信息</li>
+<li>定期检查namenode，同步namespace</li>
+<li>If the active namenode fails, the standby can take over very quickly (in a few tens of seconds) because it has the latest state available in memory: <strong>both the latest edit log entries and an up-to-date block mapping</strong>. </li>
+<li>Failover and fencing(不是很懂)：ensure that only one namenode is active<ul>
+<li>ZooKeeper：using a simple heartbeating mechanism</li>
+<li>manually by an administrator</li>
+<li>对于非平稳故障转移，需要fencing策略(…)</li>
+</ul>
+</li>
+</ul>
+<p><strong>api(…)</strong><br>hadoop是用java写的，因此hadoop文件系统的大部分交互操作都可以调用java api</p>
+<p><strong>datanode ha</strong><br>data flow</p>
+<ul>
+<li><p>读数据<img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201003093733.png" alt></p>
+<ul>
+<li>hdfs client-&gt;open dfs-&gt;调用namenode,返回输入流对象</li>
+<li>输入流对象负责namenode/datanode的I/O</li>
+<li>每轮读取输入流对象中存有位置信息的部分块，直至读完</li>
+<li>namenode只响应位置信息请求，客户端通过输入流对象直接连接datanode</li>
+<li>如果data出错或者损坏也是输入流对象与namenode沟通</li>
+</ul>
+</li>
+<li><p>hadoop节点距离<br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201003093757.png" alt></p>
+</li>
+<li><p>写数据<br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201003093828.png" alt></p>
+<ul>
+<li>hdfs client-&gt;create dfs-&gt;调用namenode,返回输出流对象</li>
+<li>输出流对象负责namenode/datanode的I/O</li>
+<li>写入的数据分为数据块形成数据队列；正在写入datanode的数据块形成确认队列；适合存放数据的datanode形成管线；当输出流对象收到管线所有的ack后才从确认队列中删除数据块</li>
+<li>挑选的datanode如果在写入时故障<ul>
+<li>将确认队列中所有的数据块添加到数据队列的最前端</li>
+<li>基于正常datanode构成的管线继续操作</li>
+<li>dfs.namenode.replication.min表示写操作的最小成功数，后续可以异步复制数据块直到达到dfs.replication</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>复制时的节点选择<br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201003095712.png" alt></p>
+</li>
+</ul>
+<h3 id="Coherency-Model-不是很懂"><a href="#Coherency-Model-不是很懂" class="headerlink" title="Coherency Model(不是很懂)"></a>Coherency Model(不是很懂)</h3><p>A coherency model for a filesystem describes the data visibility of reads and writes for a file. </p>
+<h2 id="yarn-Y-et-Another-Resource-Negotiator-…"><a href="#yarn-Y-et-Another-Resource-Negotiator-…" class="headerlink" title="yarn(Y et Another Resource Negotiator)(…)"></a>yarn(Y et Another Resource Negotiator)(…)</h2><p><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027100829.png" alt></p>
+<h3 id="application如何运行"><a href="#application如何运行" class="headerlink" title="application如何运行"></a>application如何运行</h3><p><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027095010.png" alt><br>resouce manager node: 每个集群一个，管理集群的资源使用<br>node manager node:每个节点一个，启动和监控container<br>container：由yarn分配固定的资源，一般是一个进程</p>
+<p>资源请求</p>
+<ul>
+<li>内存CPU/位置信息</li>
+<li>位置影响整个yarn的带框，要有策略(一般就近，比较灵活)</li>
+<li>请求时间：运行前发出/运行时动态请求(总之yarn可以随时发出请求，因程序而异)</li>
+</ul>
+<p>应用寿命</p>
+<ul>
+<li>有长有短，比较关心job如何对应yarn application，也能借此看出他们的寿命长短</li>
+<li>一个job对应一个application：mapreduce</li>
+<li>一个工作流/用户会话对应一个application(不懂)：spark</li>
+<li>许多用户共享一个application，这一类应用长期运行：Impala</li>
+</ul>
+<p>有现成的项目(slider)帮我们构建yarn程序，一般不必自己从头写</p>
+<h3 id="对比初代maprecuce"><a href="#对比初代maprecuce" class="headerlink" title="对比初代maprecuce"></a>对比初代maprecuce</h3><p><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027103256.png" alt><br><strong>application master和resource manager分离</strong><br>优点</p>
+<ul>
+<li>扩展性高：将job tracker的功能分离后它被设计为可扩展至10，000个节点和100，000个任务</li>
+<li>HA:With the jobtracker’s responsibilities split between the resource manager and application master in Y ARN, making the service highly available became a divide-and-conquer problem: provide HA for the resource manager, then for Y ARN applications</li>
+<li>实用性：不再区分slot(固定大小资源)的种类，统一归为资源池，想用就用，用多少拿多少</li>
+<li>适用性：支持除mapreduce外的多种分布式应用程序，拓宽了hadoop的生态圈</li>
+</ul>
+<h3 id="调度策略-需要实战-确实…"><a href="#调度策略-需要实战-确实…" class="headerlink" title="调度策略(需要实战)(确实…)"></a>调度策略(需要实战)(确实…)</h3><p>YARN provides a choice of schedulers and configurable policies.</p>
+<p>三种scheduler: yarn.resourcemanager.scheduler.class<br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027135002.png" alt></p>
+<p>FIFO不需要配置，不适合共享集群，此时短时间作业可能会等过长的时间，主要关注Capacity scheduler和Fair scheduler的配置和使用</p>
+<p>Capacity scheduler的配置：capacity-scheduler.xml(default)</p>
+<ul>
+<li>不强制杀死container</li>
+<li>队列内程序采取FIFO策略</li>
+<li>队列容量弹性策略,空闲资源的分配(受队列maximum-capacity配置属性影响)<br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027141208.png" alt><br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027141155.png" alt></li>
+</ul>
+<p>Fair scheduler的配置：fair-scheduler.xml(default)</p>
+<ul>
+<li>可抢占container 看不进去了哈哈哈</li>
+</ul>
+<p>延迟调度：在一个集群中，应用程序请求特定的节点时很有肯能该节点正忙，一般来说可以找个可替代的节点或者等待，后者即为延迟调度(效果一般不错)。</p>
+<ul>
+<li>上面两种scheduler均支持延迟调度，更改配置文件即可</li>
+<li>YARN集群中的每个节点管理器都会定期向资源管理器发送心跳请求，默认情况下是每秒一次。心跳携带关于节点管理器运行的容器和新容器可用资源的信息，因此每个心跳都是应用程序运行容器的潜在调度机会。当使用延迟调度时，调度器并不简单地使用它接收到的第一个调度机会(很有可能节点非常不满足位置约束)，而是等待给定的最大数量的调度机会出现</li>
+</ul>
+<p>DRF：优势资源公平，如何评估一个程序的重要性并分配匹配的资源给他？</p>
+<ul>
+<li>上面两种scheduler均支持DRF，更改配置文件即可</li>
+</ul>
+<h2 id="Hadoop-I-O"><a href="#Hadoop-I-O" class="headerlink" title="Hadoop I/O"></a>Hadoop I/O</h2><p>数据完整性</p>
+<ul>
+<li>HDFS:CRC32C<ul>
+<li>HDFS透明地检查写入其中的所有数据，默认情况下，在读取数据时检查校验和。为每个dfs.bytes-per-checksum字节的数据创建一个单独的校验和。默认值为512字节，由于CRC-32C校验和为4字节长，存储开销小于1%</li>
+<li>client&lt;-&gt;datanode，client尽量抢救</li>
+<li>在使用open()之前是可以想办法忽略CRC的</li>
+</ul>
+</li>
+<li>本地文件系统<ul>
+<li>执行client边的校验和：会在创建的文件的同一目录中透明地创建一个隐藏文件filename.crc，包含每个文件块的校验和</li>
+<li>同样可以禁用校验和功能</li>
+</ul>
+</li>
+<li>ChecksumFileSystem：给其他文件系统提供校验和功能</li>
+</ul>
+<p>压缩数据</p>
+<ul>
+<li>算法多样，大多是在平衡压缩空间和压缩时间</li>
+<li>codec<br><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027201156.png" alt></li>
+<li>处理流数据：StreamCompressor</li>
+<li>解压缩：FileDecompressor</li>
+<li>为了提高性能，最好使用本地库进行压缩和解压缩，而不是用java实现</li>
+<li>CodecPool(等实践)：如果您正在使用一个本机库，并且正在您的应用程序中进行大量的压缩或解压缩，请考虑使用CodecPool，它允许您重用压缩器和解压缩器，从而分摊创建这些对象的成本。</li>
+<li>如何选择压缩格式：对于mapreduce压缩后的文件最好可分，适应它的特性(等实践)</li>
+</ul>
+<p>序列化：Writables(这是hadoop自带的格式，但是只适用于Java，可写性有限，之后会学习别的框架)</p>
+<ul>
+<li>结构化数据-&gt;字节流：用于进程间通信(PRC)/持久化存储</li>
+<li>RPC序列化格式的四个理想属性：存储格式紧凑(以有效利用存储空间)、快速(因此读取或写入万亿字节数据的开销最小)、可扩展(可以透明地读取以旧格式写入的数据)和可互操作(因此我们可以使用不同的语言读取或写入持久性数据)</li>
+<li>Writable:方便序列化,满足4个理想属性(这也是不使用JAVA对象序列化的原因，之后慢慢研究)<ul>
+<li>serialize-deserialize</li>
+<li>WritableComparator/RawComparator</li>
+<li>种类很多<img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201027215411.png" alt></li>
+</ul>
+</li>
+</ul>
+<p>基于文件的数据结构</p>
+<ul>
+<li>对于某些应用程序，您需要一个专门的数据结构来保存数据。对于基于MapReduce的处理，将每个二进制数据块放入自己的文件是不可伸缩的，因此Hadoop为这些情况开发了许多更高级别的容器</li>
+<li>SequenceFile：<ul>
+<li>为二进制键值对提供了一个持久的数据结构</li>
+<li>顺序文件也可以很好地作为较小文件的容器。HDFS和MapReduce针对大型文件进行了优化，因此将文件打包成序列文件使存储和处理较小的文件更加高效</li>
+<li>Writing/Reading a SequenceFile</li>
+<li>reader.seek()/reader.sync()(sync point)</li>
+<li>展示/合并/排序 sequencefile</li>
+<li>文件格式两种：单个记录/块模式<ul>
+<li><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201028093442.png" alt></li>
+<li><img src="/2021/03/01/bigdata_foundmental/QQ%E6%88%AA%E5%9B%BE20201028093500.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MapFile以及各种变种…</li>
+<li>上面都是面向行的数据结构，还有些面向列的数据结构</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/02/28/%E8%80%83%E4%B8%AA%E5%85%AD%E7%BA%A7%E5%90%A7/" rel="next" title="考个六级吧">
+                <i class="fa fa-chevron-left"></i> 考个六级吧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-Fundamental"><span class="nav-number">1.</span> <span class="nav-text">Hadoop Fundamental</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初识Hadoop"><span class="nav-number">1.1.</span> <span class="nav-text">初识Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入问题"><span class="nav-number">1.1.1.</span> <span class="nav-text">引入问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop概述"><span class="nav-number">1.1.2.</span> <span class="nav-text">hadoop概述</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapreduce"><span class="nav-number">1.2.</span> <span class="nav-text">mapreduce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HDFS"><span class="nav-number">1.3.</span> <span class="nav-text">HDFS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#concepts"><span class="nav-number">1.3.1.</span> <span class="nav-text">concepts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS-high-availability-HA-namenode-datanode"><span class="nav-number">1.3.2.</span> <span class="nav-text">HDFS high availability(HA):namenode&#x2F;datanode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Coherency-Model-不是很懂"><span class="nav-number">1.3.3.</span> <span class="nav-text">Coherency Model(不是很懂)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-Y-et-Another-Resource-Negotiator-…"><span class="nav-number">1.4.</span> <span class="nav-text">yarn(Y et Another Resource Negotiator)(…)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#application如何运行"><span class="nav-number">1.4.1.</span> <span class="nav-text">application如何运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对比初代maprecuce"><span class="nav-number">1.4.2.</span> <span class="nav-text">对比初代maprecuce</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度策略-需要实战-确实…"><span class="nav-number">1.4.3.</span> <span class="nav-text">调度策略(需要实战)(确实…)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop-I-O"><span class="nav-number">1.5.</span> <span class="nav-text">Hadoop I&#x2F;O</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

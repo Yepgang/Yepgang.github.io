@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="algorithm," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="lecture 7 Introduction to DFS 简介：在图的基础上从细节上介绍了dfs，在dfs的基础上讲解了拓扑排序，一般讨论图默认有向图，重点讨论了下无向图中的双向连通分量 一些概念方便理解dfs color white：还没被发现的点 gray：已经被发现的点，但是它们子树的搜索还在继续 black：所有的子树包括他自己已被探索完毕   event disc(u):变gray时间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="algorithm_part2">
+<meta property="og:url" content="http://yoursite.com/2021/01/15/algorithm_part2/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="lecture 7 Introduction to DFS 简介：在图的基础上从细节上介绍了dfs，在dfs的基础上讲解了拓扑排序，一般讨论图默认有向图，重点讨论了下无向图中的双向连通分量 一些概念方便理解dfs color white：还没被发现的点 gray：已经被发现的点，但是它们子树的搜索还在继续 black：所有的子树包括他自己已被探索完毕   event disc(u):变gray时间">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115210519.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115211122.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115211206.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115210120.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115211525.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115211617.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118161735.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116163634.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116163958.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116164313.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116164427.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116164611.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116164944.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118112144.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118163954.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118164842.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118171825.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210119151826.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210119151838.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118170327.png">
+<meta property="article:published_time" content="2021-01-15T08:16:20.000Z">
+<meta property="article:modified_time" content="2021-01-20T01:52:02.136Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115210519.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/15/algorithm_part2/"/>
+
+
+
+
+
+  <title>algorithm_part2 | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/15/algorithm_part2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">algorithm_part2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-01-15T16:16:20+08:00">
+                2021-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cmu-course/" itemprop="url" rel="index">
+                    <span itemprop="name">cmu_course</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="lecture-7-Introduction-to-DFS"><a href="#lecture-7-Introduction-to-DFS" class="headerlink" title="lecture 7 Introduction to DFS"></a>lecture 7 Introduction to DFS</h2><ul>
+<li>简介：在图的基础上从细节上介绍了dfs，在dfs的基础上讲解了拓扑排序，一般讨论图默认有向图，重点讨论了下无向图中的双向连通分量</li>
+<li>一些概念方便理解dfs<ul>
+<li>color<ul>
+<li>white：还没被发现的点</li>
+<li>gray：已经被发现的点，但是它们子树的搜索还在继续</li>
+<li>black：所有的子树包括他自己已被探索完毕</li>
+</ul>
+</li>
+<li>event<ul>
+<li>disc(u):变gray时间；finish(u):变black时间</li>
+</ul>
+</li>
+<li>int(u)<ul>
+<li>the interval [disc(u), f inish(u)]</li>
+</ul>
+</li>
+<li>从图的角度，dfs形成了一个森林，森林中有这样4种边<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115210519.png" alt><ul>
+<li>对于无向图，这里定义它没有forward edge &amp; cross edge</li>
+</ul>
+</li>
+<li>一些性质<ul>
+<li>(v desc u) &lt;=&gt;(v被发现是u is gray)</li>
+<li>当我们探索(u,v)时，u is gray,v为不同颜色对应不同种类的(u,v)<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115211122.png" alt></li>
+<li>关于int(u)的一些性质<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115211206.png" alt></li>
+<li>关于dfs与circle：Graph, G, has a cycle &lt;=&gt; every DFS has a back edge</li>
+</ul>
+</li>
+<li>算法<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115210120.png" alt><ul>
+<li>O(m+n)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Topologiccal sorting<ul>
+<li>definition<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115211525.png" alt></li>
+<li>结论<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210115211617.png" alt></li>
+</ul>
+</li>
+<li>undirected graph<ul>
+<li>connected/connected component(default maximal)</li>
+<li>Biconnected Components<ul>
+<li>定义<ul>
+<li>An articulation point of a connected graph G is a vertex v such that G − v is disconnected</li>
+<li>A biconnected graph is a connected graph that has no articulation points</li>
+<li>A biconnected component (BCC) (or block) of a connected undirected graph is a maximal biconnected subgraph.</li>
+</ul>
+</li>
+<li>性质<ul>
+<li>any ugraph other than K2 is biconnected iff(if and only if) for any two distinct nodes u and v there are two vertex-disjoint paths from u to v</li>
+<li>Biconnected components are edge-disjoint<ul>
+<li>推论：两个双向连通分量的唯一一个交点即为articulation point</li>
+</ul>
+</li>
+<li>对于DFS tree T，判断point是否为articulation point，r为根节点，u为非根节点<ul>
+<li>r is an articulation point iff r has at least two children</li>
+<li>u is an articulation point iff for some child v of u, low(v) ≥ dsc(u)</li>
+</ul>
+</li>
+<li>最终实现<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118161735.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-8-Depth-First-Search-and-Strong-Components"><a href="#lecture-8-Depth-First-Search-and-Strong-Components" class="headerlink" title="lecture 8 Depth First Search and Strong Components"></a>lecture 8 Depth First Search and Strong Components</h2><ul>
+<li>简介：dfs处理有向图，重点是强连通分量上的应用</li>
+<li>提出了新的概念<ul>
+<li>num[v]访问序号；mark(v)是否正在访问，实现如下<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116163634.png" alt></li>
+<li>visit[v]</li>
+<li>Strong Components:强连通分量</li>
+<li>lowpoint(v)：The lowest numbered vertex reachable from v using zero or more tree edges</li>
+<li>lowlink(v):The lowest numbered vertex in the same strong component as v reachable from v using zero or more tree edges followed by at most one back or cross edge.<br>followed by at most one back or cross edge.</li>
+</ul>
+</li>
+<li>应用于DAGS(Directed Acyclic Graphs)<ul>
+<li>很容易输出一个拓扑排序<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116163958.png" alt></li>
+</ul>
+</li>
+<li>Determining if a Graph is Strongly Connected<ul>
+<li>实现<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116164313.png" alt></li>
+<li>结论<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116164427.png" alt></li>
+</ul>
+</li>
+<li>Computing the SCCs Using Base Vertices<ul>
+<li>实现<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116164611.png" alt></li>
+<li>base vertices<ul>
+<li>Tarjan’s SCC Algorithm:<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210116164944.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-9-11过于数学，直接搁置-…"><a href="#lecture-9-11过于数学，直接搁置-…" class="headerlink" title="lecture 9-11过于数学，直接搁置(…)"></a>lecture 9-11过于数学，直接搁置(…)</h2><h2 id="homework-2"><a href="#homework-2" class="headerlink" title="homework 2"></a>homework 2</h2><ul>
+<li>SCC PROBLEM<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118112144.png" alt></li>
+<li>BCC PROBELM<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118163954.png" alt></li>
+<li>加深对dfs的理解,dfs是真的牛逼<ul>
+<li>p<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118164842.png" alt></li>
+<li>建议直接照着T&amp;dfs一遍G<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118171825.png" alt></li>
+<li>ppppppppp<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210119151826.png" alt>)<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210119151838.png" alt></li>
+</ul>
+</li>
+<li>圈圈问题(…)<img src="/2021/01/15/algorithm_part2/QQ%E6%88%AA%E5%9B%BE20210118170327.png" alt></li>
+</ul>
+<h2 id="近期作业"><a href="#近期作业" class="headerlink" title="近期作业"></a>近期作业</h2><ul>
+<li>格式<ul>
+<li>中英文标题/关键词/摘要</li>
+<li>300/5000</li>
+</ul>
+</li>
+<li>5g车路协同<ul>
+<li>autoware软件架构解析</li>
+<li>分析其中某个算法</li>
+<li>5000 1/29</li>
+<li><a href="mailto:hanyachen@zju.edu.cn">hanyachen@zju.edu.cn</a></li>
+</ul>
+</li>
+<li>智能车辆驾驶<ul>
+<li>5000 1/28 <a href="mailto:1301550100@qq.com">1301550100@qq.com</a></li>
+</ul>
+</li>
+<li>视觉<ul>
+<li>1/28</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/08/algorithm_part1/" rel="next" title="algorithm_part1">
+                <i class="fa fa-chevron-left"></i> algorithm_part1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/01/19/algorithm_part3/" rel="prev" title="algorithm_part3">
+                algorithm_part3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-7-Introduction-to-DFS"><span class="nav-number">1.</span> <span class="nav-text">lecture 7 Introduction to DFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-8-Depth-First-Search-and-Strong-Components"><span class="nav-number">2.</span> <span class="nav-text">lecture 8 Depth First Search and Strong Components</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-9-11过于数学，直接搁置-…"><span class="nav-number">3.</span> <span class="nav-text">lecture 9-11过于数学，直接搁置(…)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#homework-2"><span class="nav-number">4.</span> <span class="nav-text">homework 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#近期作业"><span class="nav-number">5.</span> <span class="nav-text">近期作业</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

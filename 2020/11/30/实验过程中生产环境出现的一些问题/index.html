@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="环境问题," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="pro3:实验过程中生产环境出现的一些问题 给root用户设置密码：sudo passwd root 桥接模式失败，ubuntu没有wireconnected图标  试图配置静态ip后失败 发现和network-manager配置有关：https:&#x2F;&#x2F;blog.csdn.net&#x2F;lj695242104&#x2F;article&#x2F;details&#x2F;80922108   配置ubuntu集群后，使用不同的网络时需">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实验过程中生产环境出现的一些问题">
+<meta property="og:url" content="http://yoursite.com/2020/11/30/%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%87%BA%E7%8E%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="pro3:实验过程中生产环境出现的一些问题 给root用户设置密码：sudo passwd root 桥接模式失败，ubuntu没有wireconnected图标  试图配置静态ip后失败 发现和network-manager配置有关：https:&#x2F;&#x2F;blog.csdn.net&#x2F;lj695242104&#x2F;article&#x2F;details&#x2F;80922108   配置ubuntu集群后，使用不同的网络时需">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-11-30T09:56:20.000Z">
+<meta property="article:modified_time" content="2021-02-08T02:36:42.882Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="环境问题">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/30/实验过程中生产环境出现的一些问题/"/>
+
+
+
+
+
+  <title>实验过程中生产环境出现的一些问题 | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/30/%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%87%BA%E7%8E%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">实验过程中生产环境出现的一些问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-30T17:56:20+08:00">
+                2020-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%B5%E4%BF%A1%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">电信数据分析案例</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="pro3-实验过程中生产环境出现的一些问题"><a href="#pro3-实验过程中生产环境出现的一些问题" class="headerlink" title="pro3:实验过程中生产环境出现的一些问题"></a>pro3:实验过程中生产环境出现的一些问题</h2><ul>
+<li>给root用户设置密码：sudo passwd root</li>
+<li>桥接模式失败，ubuntu没有wireconnected图标 <ul>
+<li>试图配置静态ip后失败</li>
+<li>发现和network-manager配置有关：<a href="https://blog.csdn.net/lj695242104/article/details/80922108" target="_blank" rel="noopener">https://blog.csdn.net/lj695242104/article/details/80922108</a></li>
+</ul>
+</li>
+<li>配置ubuntu集群后，使用不同的网络时需要配置不同的hosts，有点麻烦</li>
+<li>虚拟机之间文件的移动：scp 、rsync 和 xsync <a href="https://blog.csdn.net/qq_41813208/article/details/100940990?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control" target="_blank" rel="noopener">https://blog.csdn.net/qq_41813208/article/details/100940990?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control</a></li>
+<li>权限问题(chmod chown)</li>
+<li>hadoop的两种模式：hadoop dfsadmin -safemode enter/leave</li>
+<li>一个非常脑残的bug：<ul>
+<li>使用xsync脚本给集群配置hosts文件，因为权限问题没有成功，误以为hosts已经配置好了，结果集群始终不能正常工作</li>
+</ul>
+</li>
+<li>实验的时候突然想到我要是换电脑了怎么办哈哈哈如何迁移vscode <a href="https://zhuanlan.zhihu.com/p/79612479?utm_source=com.doc360.client&amp;utm_medium=social&amp;utm_oi=45673261039616" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/79612479?utm_source=com.doc360.client&amp;utm_medium=social&amp;utm_oi=45673261039616</a></li>
+<li>hbase关闭失败：<a href="https://blog.csdn.net/weixin_45462732/article/details/106909501?utm_medium=distribute.pc_relevant.none-task-blog-baidulandingword-2&amp;spm=1001.2101.3001.4242" target="_blank" rel="noopener">https://blog.csdn.net/weixin_45462732/article/details/106909501?utm_medium=distribute.pc_relevant.none-task-blog-baidulandingword-2&amp;spm=1001.2101.3001.4242</a></li>
+</ul>
+<p>报错如：idea Failed to read artifact descriptor for net.minidev:json-smart:jar:2.3-SNAPSHOT<br>原因：网速不好，下载依赖包出错，但idea认为依赖包已下载完成，所以不再下载，但springboot应用找不到jar包，报错。</p>
+<p>在idea中项目添加新的module时，在maven页签中查看显示新增加的模块是灰色的，导致无法引用其他模块的jar<br>　　原因是新增加的模块没有被正式识别<br>　　解决方式：<br>在idea中点击File–&gt;settings，搜索maven，点击ignored Files，可以看到灰色的模块处于选中状态，去掉选中状态点击保存即可正常使用。</p>
+<p>hbase无法关闭：hbase-daemon.sh stop master</p>
+<p>Cannot Resolve symbol TableInputFormat HBase找不到TableInputFormat<br>这是是因为Maven依赖不对，新版本2.1.X版本的HBASE又双叒叕把mapreduce.TableInputFormat单独抽取出来了</p>
+<p>yarn内存分配问题：<a href="https://stackoverflow.com/questions/20803577/hadoop-yarn-container-does-not-allocate-enough-space/" target="_blank" rel="noopener">https://stackoverflow.com/questions/20803577/hadoop-yarn-container-does-not-allocate-enough-space/</a></p>
+<p>JDBC(如何debug呢？？)</p>
+<p>Ubuntu20.0不支持mysql-workbench,可以下低版本的<br>用户/密码/权限/数据库/表</p>
+<p>maven的依赖一定要注意，忘记写hadoop-client的依赖，出现版本冲突</p>
+<p>安装redis：依赖gcc，<a href="https://www.cnblogs.com/richerdyoung/p/8066373.html" target="_blank" rel="noopener">https://www.cnblogs.com/richerdyoung/p/8066373.html</a></p>
+<p>redis 报错 Redis protected-mode 配置文件没有真正启动:<a href="https://blog.csdn.net/Agly_Clarlie/article/details/52251746" target="_blank" rel="noopener">https://blog.csdn.net/Agly_Clarlie/article/details/52251746</a></p>
+<p>无法启动idea：ssh不能显示图形软件，在用ssh切到远程主机再切回来时也一样，需要重启shell</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E7%8E%AF%E5%A2%83%E9%97%AE%E9%A2%98/" rel="tag"># 环境问题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/30/java%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%9E%84%E5%BB%BA%E5%92%8Cidea%E7%9A%84%E9%80%82%E5%BA%94/" rel="next" title="java项目的构建和idea的适应">
+                <i class="fa fa-chevron-left"></i> java项目的构建和idea的适应
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/" rel="prev" title="新的需要学的大数据框架">
+                新的需要学的大数据框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pro3-实验过程中生产环境出现的一些问题"><span class="nav-number">1.</span> <span class="nav-text">pro3:实验过程中生产环境出现的一些问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

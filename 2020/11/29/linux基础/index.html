@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="指令man界面空格(下一页);&#x2F;words(自上往下检索);?words(自下往上检索);n(下一个);N(上一个);q(退出) echo string&#x2F;$SHELL&#x2F;$HOSTNAME date [] “” reboot shutdown [r&#x2F;h] now&#x2F;number apt与apt-get: elinks:文本浏览器 ifconfig:eth0：网卡名称Link encap：网卡的接口类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux基础">
+<meta property="og:url" content="http://yoursite.com/2020/11/29/linux%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="指令man界面空格(下一页);&#x2F;words(自上往下检索);?words(自下往上检索);n(下一个);N(上一个);q(退出) echo string&#x2F;$SHELL&#x2F;$HOSTNAME date [] “” reboot shutdown [r&#x2F;h] now&#x2F;number apt与apt-get: elinks:文本浏览器 ifconfig:eth0：网卡名称Link encap：网卡的接口类型">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200923185224.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200923203112.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200928202353.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200928202619.png">
+<meta property="article:published_time" content="2020-11-29T06:22:20.000Z">
+<meta property="article:modified_time" content="2020-11-29T06:09:51.715Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200923185224.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/29/linux基础/"/>
+
+
+
+
+
+  <title>linux基础 | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/29/linux%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">linux基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-29T14:22:20+08:00">
+                2020-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h1><p>man界面<br>空格(下一页);/words(自上往下检索);?words(自下往上检索);<br>n(下一个);N(上一个);q(退出)</p>
+<p>echo string/$SHELL/$HOSTNAME</p>
+<p>date [] “”</p>
+<p>reboot shutdown [r/h] now/number</p>
+<p>apt与apt-get:<br><img src="/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200923185224.png" alt></p>
+<p>elinks:文本浏览器</p>
+<p>ifconfig:<br>eth0：网卡名称<br>Link encap：网卡的接口类型，这里是以太网<br>HWaddr：网卡的硬件地址，俗称的MAC地址<br>inet addr：IPv4地址，如果是IPv6会写成inet6 addr<br>Bcast：广播地址<br>Mask：子网掩码<br>UP：表示网卡是开启状态<br>BROADCAST：表示网卡支持广播<br>RUNNING：表示网卡的网线已经被接上<br>MULTICAST：表示网卡支持组播<br>MTU：网络最大传输单元<br>Metric：到达网关的度量值，参考：<a href="http://m.chinabyte.com/network/1/12287691_gfh.shtml" target="_blank" rel="noopener">http://m.chinabyte.com/network/1/12287691_gfh.shtml</a><br>RX packets：网络从启动到现在为止接收的数据包大小，单位是字节，ror 发生错误的数据包，dropped 被丢弃的数据包<br>TX packets：网络从启动到现在为止发送的数据包大小，单位是字节，ror 发生错误的数据包，dropped 被丢弃的数据包<br>collisions：发生碰撞的数据包，如果发生太多次,表明网络状况不太好<br>txqueuelen：传输数据的缓冲区的储存长度<br>RX bytes：总接收字节总量<br>TX bytes：总发送字节总量<br>Memory：网卡硬件的内存地址</p>
+<p>uname -a</p>
+<p>cat /proc/version<br>cat [n/b/A]<br>more<br>head<br>tail<br>tr 转换<br>wc 统计<br>diff 比较</p>
+<p>lsb_release</p>
+<p>uptime</p>
+<p>free [m/g]</p>
+<p>who last </p>
+<p>history [c]<br>sudo cat ~/.bash_history(显示所有,有上限)<br>/etc/skel/.bashrc中设置的HISTSIZE=1000 HISTFILESIZE=2000;source /路径/.bashrc 或是重启系统</p>
+<p>cd . ~ ..<br>pwd</p>
+<p>ls [a/d/h/l] 目录<br><img src="/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200923203112.png" alt></p>
+<p>mkdir [m/p/v]<br>touch [a/m/d/t] “” 文件</p>
+<p>cp test test1 cp [p/d/r/i/a] 文件 文件/目录</p>
+<p>mv 移动文件或改名 rm [r/f/i] rmdir<br>dd 不太会用</p>
+<p>su<br>sudo password<br>passwd 其他用户名<br>useradd userdel usermode groupadd<br>id</p>
+<p>tar [选项][文件]<br>tar -czvf etc.tar.gz /etc/</p>
+<p>grep /sbin/nologin /etc/passwd &gt;&gt; lines<br>find 路径 条件 操作</p>
+<h1 id="管道命令符"><a href="#管道命令符" class="headerlink" title="管道命令符 |"></a>管道命令符 |</h1><h1 id="输入输出重定向"><a href="#输入输出重定向" class="headerlink" title="输入输出重定向"></a>输入输出重定向</h1><h1 id="命令行通配符-拓展符"><a href="#命令行通配符-拓展符" class="headerlink" title="命令行通配符 拓展符"></a>命令行通配符 拓展符</h1><h1 id="path变量-重要的环境变量-export-全局-TEST"><a href="#path变量-重要的环境变量-export-全局-TEST" class="headerlink" title="path变量 重要的环境变量 export(全局) $TEST"></a>path变量 重要的环境变量 export(全局) $TEST</h1><p>alias unalias </p>
+<h1 id="配置主机名、网卡、"><a href="#配置主机名、网卡、" class="headerlink" title="配置主机名、网卡、"></a>配置主机名、网卡、</h1><h1 id="shell-bash-batch-shell"><a href="#shell-bash-batch-shell" class="headerlink" title="shell bash = batch shell"></a>shell bash = batch shell</h1><p>sh test.sh 参数 参数测试<br>[ test ]:文件测试、逻辑测试、数值测试、字符串测试<br>if for while case 与或非 </p>
+<h1 id="ctrl-null-googlepingyin-fcitx"><a href="#ctrl-null-googlepingyin-fcitx" class="headerlink" title="ctrl+null googlepingyin fcitx()"></a>ctrl+null googlepingyin fcitx()</h1><h1 id="at-任务"><a href="#at-任务" class="headerlink" title="at 任务"></a>at 任务</h1><h1 id="rwx-chmod-chown-suid-sgid-4-2-1-sbit"><a href="#rwx-chmod-chown-suid-sgid-4-2-1-sbit" class="headerlink" title="rwx chmod chown suid sgid 4 2 1 sbit"></a>rwx chmod chown suid sgid 4 2 1 sbit</h1><h1 id="chaattr-lsattr"><a href="#chaattr-lsattr" class="headerlink" title="chaattr lsattr"></a>chaattr lsattr</h1><h1 id="visudo-配置-sudo"><a href="#visudo-配置-sudo" class="headerlink" title="visudo 配置 sudo"></a>visudo 配置 sudo</h1><h1 id="setfacl-getfacl-针对特定用户的目录或者文件"><a href="#setfacl-getfacl-针对特定用户的目录或者文件" class="headerlink" title="setfacl getfacl 针对特定用户的目录或者文件"></a>setfacl getfacl 针对特定用户的目录或者文件</h1><h1 id="目录定义-硬盘设备"><a href="#目录定义-硬盘设备" class="headerlink" title="目录定义 硬盘设备"></a>目录定义 硬盘设备</h1><p><img src="/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200928202353.png" alt><br><img src="/2020/11/29/linux%E5%9F%BA%E7%A1%80/QQ%E6%88%AA%E5%9B%BE20200928202619.png" alt></p>
+<h1 id="文件管理系统"><a href="#文件管理系统" class="headerlink" title="文件管理系统"></a>文件管理系统</h1><h2 id="Ubuntu与Windows的文件复制"><a href="#Ubuntu与Windows的文件复制" class="headerlink" title="Ubuntu与Windows的文件复制"></a>Ubuntu与Windows的文件复制</h2><p>vmware tools; 共享文件夹； mnt/hgfs<br>对于 Linux 虚拟机，您可以从命令行手动安装 VMware Tools。对于 Linux 的较高发行版，请使用集成的 open-vm-tools 版本。</p>
+<h2 id="path"><a href="#path" class="headerlink" title="path"></a>path</h2><p>~/.bashrc<br>/etc/profile<br>hbase path useless?</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/29/java%E5%9F%BA%E7%A1%80/" rel="next" title="java基础学习">
+                <i class="fa fa-chevron-left"></i> java基础学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/11/29/markdown/" rel="prev" title="markdown_tips">
+                markdown_tips <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#指令"><span class="nav-number">1.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#管道命令符"><span class="nav-number">2.</span> <span class="nav-text">管道命令符 |</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#输入输出重定向"><span class="nav-number">3.</span> <span class="nav-text">输入输出重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#命令行通配符-拓展符"><span class="nav-number">4.</span> <span class="nav-text">命令行通配符 拓展符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#path变量-重要的环境变量-export-全局-TEST"><span class="nav-number">5.</span> <span class="nav-text">path变量 重要的环境变量 export(全局) $TEST</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置主机名、网卡、"><span class="nav-number">6.</span> <span class="nav-text">配置主机名、网卡、</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#shell-bash-batch-shell"><span class="nav-number">7.</span> <span class="nav-text">shell bash &#x3D; batch shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ctrl-null-googlepingyin-fcitx"><span class="nav-number">8.</span> <span class="nav-text">ctrl+null googlepingyin fcitx()</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#at-任务"><span class="nav-number">9.</span> <span class="nav-text">at 任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rwx-chmod-chown-suid-sgid-4-2-1-sbit"><span class="nav-number">10.</span> <span class="nav-text">rwx chmod chown suid sgid 4 2 1 sbit</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#chaattr-lsattr"><span class="nav-number">11.</span> <span class="nav-text">chaattr lsattr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#visudo-配置-sudo"><span class="nav-number">12.</span> <span class="nav-text">visudo 配置 sudo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#setfacl-getfacl-针对特定用户的目录或者文件"><span class="nav-number">13.</span> <span class="nav-text">setfacl getfacl 针对特定用户的目录或者文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目录定义-硬盘设备"><span class="nav-number">14.</span> <span class="nav-text">目录定义 硬盘设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件管理系统"><span class="nav-number">15.</span> <span class="nav-text">文件管理系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ubuntu与Windows的文件复制"><span class="nav-number">15.1.</span> <span class="nav-text">Ubuntu与Windows的文件复制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#path"><span class="nav-number">15.2.</span> <span class="nav-text">path</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

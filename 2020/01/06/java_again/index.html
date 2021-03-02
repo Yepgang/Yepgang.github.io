@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概述之前学习java，只学习了Java最基本的内容，最近准备从以下两个方面扎实地学习下java：  更细致地学习java知识本身，更多地是记录学习过程中的思考而非知识 借机回顾下算法和数据结构相关地知识，语言当然是用java，考虑到最近的代码大概是leetcode级别，ide我还是用vscode  chapter1 基础问题 JRE：jvm + javaSE标准类库；JDK: JRE + 工具(j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java_again">
+<meta property="og:url" content="http://yoursite.com/2020/01/06/java_again/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="概述之前学习java，只学习了Java最基本的内容，最近准备从以下两个方面扎实地学习下java：  更细致地学习java知识本身，更多地是记录学习过程中的思考而非知识 借机回顾下算法和数据结构相关地知识，语言当然是用java，考虑到最近的代码大概是leetcode级别，ide我还是用vscode  chapter1 基础问题 JRE：jvm + javaSE标准类库；JDK: JRE + 工具(j">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ20201016104359.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ20201016152342.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210204195804.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210205093256.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210208091734.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210208091817.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210208093838.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210208094651.png">
+<meta property="og:image" content="http://yoursite.com/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210209154653.png">
+<meta property="article:published_time" content="2020-01-06T08:16:20.000Z">
+<meta property="article:modified_time" content="2021-02-14T09:58:11.291Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/01/06/java_again/QQ20201016104359.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/06/java_again/"/>
+
+
+
+
+
+  <title>java_again | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/06/java_again/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java_again</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-06T16:16:20+08:00">
+                2020-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>之前学习java，只学习了Java最基本的内容，最近准备从以下两个方面扎实地学习下java：</p>
+<ul>
+<li>更细致地学习java知识本身，更多地是记录学习过程中的思考而非知识</li>
+<li>借机回顾下算法和数据结构相关地知识，语言当然是用java，考虑到最近的代码大概是leetcode级别，ide我还是用vscode</li>
+</ul>
+<h2 id="chapter1-基础问题"><a href="#chapter1-基础问题" class="headerlink" title="chapter1 基础问题"></a>chapter1 基础问题</h2><ul>
+<li>JRE：jvm + javaSE标准类库；JDK: JRE + 工具(javac/java) </li>
+<li>main方法时Java程序的入口，写法固定<ul>
+<li>jvm运行程序时调用main方法，所以需要定义为public</li>
+<li>此时并没有创建包含main方法的类，所以需要定义为static</li>
+<li>main方法没有返回值，所以声明为void<ul>
+<li>java是针对多线程设计的语言，main的完成并不意味整个程序都完成，所以main的返回类型没有意义</li>
+<li>System.exit(int),退出程序<ul>
+<li>0(normal);1(exception);-1(error)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>main方法接受命令行的多个参数，所以需要参数args数组</li>
+<li>main方法可以重载、调用、继承、重写、抛出异常、带有类型参数(??) </li>
+</ul>
+</li>
+<li>源文件.java,与public类同名，对应唯一一个public类<ul>
+<li>public类作为文件对外的接口，只能有唯一一个</li>
+<li>public类与文件同名可以加快jvm查找类的速度，编译更快</li>
+</ul>
+</li>
+<li>javadoc:API文档<a href="https://docs.oracle.com/en/java/javase/15/docs/api/index.html" target="_blank" rel="noopener">https://docs.oracle.com/en/java/javase/15/docs/api/index.html</a><ul>
+<li>进一步阅读java源码(这个等之后看有没有必要)</li>
+</ul>
+</li>
+<li>关键字/保留字/标识符(严格区分大小写)<ul>
+<li>包名：xxxyyyzzz; 类/接口：XxxYyyZzz; 变量/方法：xxxYyyZzz 常量：XXX_YYY_ZZZ</li>
+<li>代码简洁知道：无重复代码、提高表达力、简单抽象</li>
+</ul>
+</li>
+<li>Java各整数类型/浮点类型有固定的表数范围和字段长度，不受具体OS的影响，以保证java程序的可移植性<ul>
+<li>Java的浮点型常量默认为double型 整型默认为int</li>
+<li>Java中的所有字符都使用Unicode字符集(UTF-8)，char(2 byte)<ul>
+<li>unicode字符集：包含所有符号的字符集；utf-8:实现unicode的一种变长编码方式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>boolean类型数据在java中是单独的数据类型，只允许取值true和false，默认为false，boolean类型不可以转换为其它的数据类型<ul>
+<li>不可以使用0或非 0 的整数替代false和true(所以不参与计算),在编译之后都使用java虚拟机中的int数据类型来代替</li>
+</ul>
+</li>
+<li>关于null<ul>
+<li>大小写敏感</li>
+<li>只是一个特殊值，并非对象/类型，也不是任何对象的实例，可以赋值给任何引用类型,不能赋值给基础类型</li>
+<li>引用变量的默认值为null</li>
+<li>null主要用来临时标识不确定的对象，可以调用静态方法</li>
+</ul>
+</li>
+<li>byte,short,char之间不会相互转换，他们三者在计算时首先转换为int类型(容量小的类型自动转换为容量大的数据类型)</li>
+<li>基本数据类型/引用数据类型(包括数组)<ul>
+<li>基本数据类型：main栈；引用数据类型：堆</li>
+<li>引用数据类型的值为对象的地址</li>
+<li>==<ul>
+<li>基本数据类型：比较值</li>
+<li>引用数据类型：比较存放的地址值</li>
+<li>如果想比较内容，一般有equal方法</li>
+</ul>
+</li>
+<li>string对象本身不可改变，但string对象的引用是可以指向新的对象的</li>
+</ul>
+</li>
+<li>instanceof: 返回boolen</li>
+<li>“&amp;”和“&amp;&amp;”的区别；“|”和“||”的区别<ul>
+<li>后者短路计算，速度更快</li>
+</ul>
+</li>
+<li>e.g. &gt;&gt;&gt;:无符号右移</li>
+<li>数组：声明、分配空间、赋值<ul>
+<li>声明数组不指定长度 int[] a / int a[]；分配空间用new(分配空间的默认值是0)；赋值：静态/动态</li>
+</ul>
+</li>
+<li>return直接结束整个方法</li>
+<li>初始化(多维)数组：动态/静态 多维数组不一定时规则矩阵</li>
+</ul>
+<h2 id="chapter2-面向对象"><a href="#chapter2-面向对象" class="headerlink" title="chapter2 面向对象"></a>chapter2 面向对象</h2><ul>
+<li>好处<ul>
+<li>避免对数据进行不合理的操作</li>
+<li>代码更简洁</li>
+<li>方便代码的使用和维护</li>
+<li>方便代码功能的拓展<h3 id="part1-类和对象"><a href="#part1-类和对象" class="headerlink" title="part1 类和对象"></a>part1 类和对象</h3></li>
+</ul>
+</li>
+<li>类/对象(实例)</li>
+<li>内存解析<ul>
+<li>栈：局部变量，对象引用</li>
+<li>堆：对象实例，数组</li>
+<li>方法区：类信息 、常量 、静态变量/方法 </li>
+</ul>
+</li>
+<li>匿名对象：不设置对象的句柄，直接调用方法<ul>
+<li>只调用一次方法</li>
+<li>将匿名对象作为参数</li>
+</ul>
+</li>
+<li>overload：方法的重载，需要参数不同；</li>
+<li>…表示可变数量的参数；</li>
+<li>参数的值传递机制(基本/引用数据类型)<ul>
+<li>基本数据类型：传递值副本</li>
+<li>引用数据类型：传递地址<h3 id="part2-封装"><a href="#part2-封装" class="headerlink" title="part2 封装"></a>part2 封装</h3></li>
+</ul>
+</li>
+<li>好处(个人理解)<ul>
+<li>避免对数据进行不合理的操作</li>
+<li>方便代码的使用和维护</li>
+</ul>
+</li>
+<li>实现途径<ul>
+<li>访问权限修饰符<ul>
+<li><img src="/2020/01/06/java_again/QQ20201016104359.png" alt></li>
+</ul>
+</li>
+<li>构造器：隐式/显式(可以overload)，无返回类型，与对象同名<ul>
+<li>作用是初始化对象</li>
+<li>this关键字初始化对象时，”this(形参列表)”：必须声明在类的构造器的首行</li>
+</ul>
+</li>
+<li>package-&gt;import-&gt;class<ul>
+<li>package方便管理，也是封装的体现</li>
+<li>import告诉编译器去哪里寻找类<h3 id="part3-继承"><a href="#part3-继承" class="headerlink" title="part3 继承"></a>part3 继承</h3></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>好处<ul>
+<li>代码更简洁</li>
+<li>方便了代码功能的拓展</li>
+<li>多态的前提</li>
+</ul>
+</li>
+<li>实现<ul>
+<li>extend<ul>
+<li>java只支持单层/多层继承(extend),子类无法访问父类private</li>
+</ul>
+</li>
+<li>overwrite<ul>
+<li><img src="/2020/01/06/java_again/QQ20201016152342.png" alt></li>
+<li>关于重写的细节理解有限(…)</li>
+</ul>
+</li>
+<li>构造器<ul>
+<li>this/super</li>
+<li>子类中所有的构造器默认都会访问父类中空参数的构造器</li>
+<li>当父类中没有空参数的构造器时，子类的构造器必须通过this(参数列表)或者super(参数列表)语句指定调用本类或者父类中相应的构造器。同时，只能”二选一”，且必须放在构造器的首行<ul>
+<li>二选一是避免重复构造</li>
+<li>放在首行是为了避免操作还未初始化的对象<h3 id="part4-多态"><a href="#part4-多态" class="headerlink" title="part4 多态"></a>part4 多态</h3></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>好处<ul>
+<li>方便代码功能的拓展</li>
+</ul>
+</li>
+<li>实现<ul>
+<li>编译期间多态：重载，对应静态绑定</li>
+<li>运行期间多态：重写，对应动态绑定</li>
+<li>多态针对的是方法而不是成员变量</li>
+<li>运行期间多态的实现：父类的引用指向子类的对象；该引用无法访问子类添加的属性和方法</li>
+</ul>
+</li>
+<li>object类/包装类<ul>
+<li>基本数据类型-包装类(父类是number)-string类</li>
+<li>现在有自动装箱/插箱，使用起来很方便，但是要注意尽量不要生成大量的无用对象</li>
+</ul>
+</li>
+</ul>
+<h3 id="part5-在三大特性的基础上对类的一些补充"><a href="#part5-在三大特性的基础上对类的一些补充" class="headerlink" title="part5 在三大特性的基础上对类的一些补充"></a>part5 在三大特性的基础上对类的一些补充</h3><ul>
+<li>static<ul>
+<li>作用：修饰所有对象共享的变量/方法，仅仅通过类本身调用</li>
+<li>static随类一起加载，static方法只能访问类的static修饰的属性或方法(内部肯定没this…),</li>
+<li>可以被重写，但是实现不了多态，因为静态方法会在编译期间被绑定</li>
+</ul>
+</li>
+<li>代码块<ul>
+<li>作用：初始化呗，做部分构造器的工作</li>
+<li>只能被static或非static修饰<ul>
+<li>静态代码块</li>
+<li>非静态代码块，对象创建时执行一次，优于构造器</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>final<ul>
+<li>类、方法、变量；无法继承、重写、改变(const)</li>
+</ul>
+</li>
+<li>abstract<ul>
+<li>类、方法；只能继承、只能重写，不能实例化抽象类，这是abstract的作用</li>
+</ul>
+</li>
+<li>interface：<ul>
+<li>作用：制定规范，public修饰</li>
+<li>抽象/静态/default方法和常量的集合：方法默认public abstract，常量默认public static final<ul>
+<li>默认方法(…)</li>
+</ul>
+</li>
+<li>弥补多重继承；接口不能继承类，只能继承接口</li>
+</ul>
+</li>
+<li>内部类<ul>
+<li>作用：内部类可以继承单独的接口/类，更好的实现多继承效果</li>
+<li>成员/局部内部类/匿名内部类：依附于Outer Class的实例，即隐含地持有Outer.this实例，并拥有Outer Class的private访问权限</li>
+<li>静态内部类：独立类，但拥有Outer Class的private访问权限</li>
+</ul>
+</li>
+</ul>
+<h2 id="chapter-3-高级特性"><a href="#chapter-3-高级特性" class="headerlink" title="chapter 3 高级特性"></a>chapter 3 高级特性</h2><h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><ul>
+<li>基本概念：程序、进程、线程<ul>
+<li>程序：一组指令的集合，用于完成特定的任务</li>
+<li>进程：正在运行的一个程序，存在生命周期；是资源分配的基本单位，对应单独的内存区域</li>
+<li>线程：进程可进一步划分为线程，一个进程可以并行执行多个线程；是调度和执行的基本单位，对应独立的运行栈和程序计数器<ul>
+<li>优点：改善程序结构，各个线程独立运行，利于修改；线程切换的开销小；同一进程的多个线程共享相同的内存空间,线程间的通信更简便</li>
+<li>缺点：多个线程操作共享的系统资源会带来安全隐患，需要有同步机制</li>
+</ul>
+</li>
+<li>e.g.一个java程序至少包括三个线程：main()主线程、gc()垃圾回收线程、异常处理线程</li>
+</ul>
+</li>
+<li>线程的创建和启动<ul>
+<li>java.lang.Thread、start()调用run()</li>
+<li>创建有两种方法(还有Callable接口、线程池这里不展开了)<ul>
+<li>继承Thread类，重写run方法</li>
+<li>实现Runnable接口，将其子类对象作为参数传递给Thread类的构造器中<ul>
+<li>好处：避免了单继承的局限；多个线程可以共享同一个接口实现类的对象</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>线程的调度<ul>
+<li>同优先级线程组成先进先出队列</li>
+<li>高优先级线程采用优先调度</li>
+<li>线程的优先级1-10，线程创建时继承父线程的优先级</li>
+</ul>
+</li>
+<li>线程的分类<ul>
+<li>守护线程/用户线程</li>
+<li>守护线程服务用户线程，若JVM中没有用户线程，当前JVM退出</li>
+</ul>
+</li>
+<li>线程的生命周期<ul>
+<li>新建、就绪、运行、阻塞、死亡</li>
+</ul>
+</li>
+<li>同步机制<ul>
+<li>synchronized:同步代码块、方法</li>
+<li>lock：显示锁，同步代码块，性能更好</li>
+<li>线程的通信<ul>
+<li>Synchronized的语义底层是通过一个monitor(监视器锁)的对象来完成，其实wait/notify等方法也依赖于monitor对象，wait()notify()notifyAll(),只能在synchronized方法/代码块中使用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>死锁：不同的线程分别占用对方需要步资源放弃，都在等待自己需要的资源，就形成了线程的死锁</li>
+</ul>
+<h3 id="java常用类"><a href="#java常用类" class="headerlink" title="java常用类"></a>java常用类</h3><ul>
+<li>字符串<ul>
+<li>String<ul>
+<li>final修饰，对象的值不可更改，存在value[]</li>
+<li>分析String的内存区别<img src="/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210204195804.png" alt></li>
+<li>s.intern()返回常量池中s的地址</li>
+<li>parseInt/vauleOf…各种转化</li>
+</ul>
+</li>
+<li>StringBuffer/StringBuider<ul>
+<li>可变的字符序列</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>时间<ul>
+<li>System：currentTime</li>
+<li>Date/SimpleDateFormat/Calender(jdk8之前)</li>
+<li>java.time(.format/temporal)<ul>
+<li>LocalDate\LocalTime\LocalDateTime</li>
+</ul>
+</li>
+<li>Instant</li>
+<li>java.time.format.DateTimeFormatter<img src="/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210205093256.png" alt></li>
+</ul>
+</li>
+<li>比较<ul>
+<li>继承Comparable</li>
+<li>定制Comparator作为sort的参数</li>
+</ul>
+</li>
+<li>System<ul>
+<li>in/out/err三个成员变量</li>
+<li>该类的构造器是private的，无法实例化，但是成员变量/方法都是static，可以调用</li>
+<li>currentTime/exit/gc/getProperty</li>
+</ul>
+</li>
+<li>Math</li>
+<li>BigInteger/BigDecimal</li>
+<li>enum:为了让编译器能自动检查某个值在枚举的集合内，并且不同用途的枚举需要不同的类型来标记，不能混用，我们可以使用enum来定义枚举类<ul>
+<li>enum默认继承java.lang.Enum,不再继承其他类</li>
+<li>枚举类的构造器只能用private修饰</li>
+<li>枚举类的第一行声明枚举类对象，逗号分隔分号结尾，列出的实例默认public static final修饰</li>
+<li>枚举类实现接口…</li>
+</ul>
+</li>
+<li>annotation：@<ul>
+<li>生成文档的相关注释</li>
+<li>编译时进行格式检查</li>
+<li>实现一些额外的功能(…)</li>
+</ul>
+</li>
+</ul>
+<h3 id="java集合"><a href="#java集合" class="headerlink" title="java集合"></a>java集合</h3><ul>
+<li>分为Collection和Map两种体系：<img src="/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210208091734.png" alt>)<img src="/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210208091817.png" alt></li>
+<li>Collection接口：包含可操作List/Set的方法</li>
+<li>Iterator接口<ul>
+<li>iterator()，返回实现了Iterator接口的对象</li>
+<li>用于遍历集合，同时不暴露集合内部的细节</li>
+<li>每次调用iterator()得到一个全新的迭代器对象</li>
+<li>hasNext-&gt;next</li>
+<li>foreach循环底层用Iterator实现，遍历不需获取Collection的长度，也不需要索引</li>
+</ul>
+</li>
+<li>List<ul>
+<li>Collection子接口，添加了一些操作索引的方法，解决数组长度写死的局限性</li>
+<li>常用的实现类：ArrayList、LinkedList、Vector<ul>
+<li>ArrayList:数组实现的变长数组，方便随机访问</li>
+<li>LinkedList:双向链表实现，适合插入和删除</li>
+<li>Vector:与ArrayList类似，但是是强同步类，速度比ArrayList慢</li>
+<li>Vector还有一个子类Stack</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Set<ul>
+<li>Collection子接口，没有提供额外的方法</li>
+<li>常用实现类：HashSet、LinkedHashSet<ul>
+<li>HashSet:必须重写equals和hashCode方法<img src="/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210208093838.png" alt></li>
+<li>LinkedHashSet是HashSet的子类，在后者的基础上用双向链表维护元素的插入顺序，所以性能略低于后者</li>
+<li>TreeSet：底层采用红黑树结构存储数据，自然排序/定制排序(…)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Map<ul>
+<li>与Collection并列存在，保存key-vaule型数据</li>
+<li>key用Set存放，同一个Map对象对应的类必须重写hashcode和equles方法</li>
+<li>常用实现类：HashMap、TreeMap、LinkedHashMap、Properties</li>
+<li>HashMap:数组+链表+树实现<img src="/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210208094651.png" alt></li>
+<li>LinkedHashMap:HashMap的子类，在后者的基础上用双向链表维护元素的插入顺序，所以性能略低于后者</li>
+<li>TreeMap(…)</li>
+<li>HashTable:与HashMap类似，但是线程安全，很多情况下可以互用，需要注意的是HashTable不允许使用null作为key和vaule</li>
+<li>Properties:HashMap的子类，适合处理配置文件<ul>
+<li>setProperty()/getProperty()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Collections工具类 <ul>
+<li>操作Set、List、Map的工具类</li>
+<li>提供排序、查找、替换、同步控制等大量静态方法</li>
+</ul>
+</li>
+</ul>
+<h3 id="泛型-通配符"><a href="#泛型-通配符" class="headerlink" title="泛型/通配符"></a>泛型/通配符</h3><ul>
+<li>泛型<ul>
+<li>增加程序的可读性和稳定性</li>
+<li>可以将类或者方法中的参数类型化，增加代码复用性</li>
+</ul>
+</li>
+<li>通配符<ul>
+<li>在对泛型进行赋值时，当赋值的类型不确定的时候，我们用通配符(?)代替，方便引用包含多种类型的泛型，进一步提高代码复用性</li>
+<li>部分方法会丢失原始集合中的类型信息，返回object对象，也没办法往里面添加非object对象</li>
+<li>可以配合extend/super使用：限定通配符</li>
+</ul>
+</li>
+</ul>
+<h3 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h3><ul>
+<li>File类<ul>
+<li>用于表示一个真实存在的文件或目录并对其进行新建、删除、重命名等等</li>
+<li>File对象可能没有真实存在的文件或目录</li>
+<li>可以作为参数传递给流的构造器</li>
+<li>路径分隔符：/或者\或者File.separator</li>
+</ul>
+</li>
+<li>I/O用于处理设备之间的数据传输，分为字节流/字符流<img src="/2020/01/06/java_again/QQ%E6%88%AA%E5%9B%BE20210209154653.png" alt></li>
+<li>System:in/out分别对应InputStream和PrintStream，后者是OutputStream的子类<ul>
+<li>可以通过setIn/setOut重定向</li>
+</ul>
+</li>
+<li>NIO：Path、Files…</li>
+</ul>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><ul>
+<li>本质：允许程序在运行期间借助反射机制获取类的内部信息并对其进行操作<ul>
+<li>一个类对应JVM一个Class类型对象,即.class文件，包含类的所有被加载的结构</li>
+<li>java.lang.Class、java.lang.relect.[Method,Filed,Constuctor]</li>
+<li>在Object类中定义了public final class getClass()</li>
+<li>Class类是反射的本质</li>
+<li>获取方式<ul>
+<li>.class、.getClass、class.forName()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>类的加载<ul>
+<li>类加载器：将class文件读入内存，创建class对象</li>
+<li>链接：将类的二进制数据合并到JRE中</li>
+<li>Jvm：初始化，执行类构造器方法</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/06/%E8%BF%91%E6%9C%9F%E8%AE%A1%E5%88%92/" rel="next" title="近期计划">
+                <i class="fa fa-chevron-left"></i> 近期计划
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/23/mypaper/" rel="prev" title="mypaper">
+                mypaper <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter1-基础问题"><span class="nav-number">2.</span> <span class="nav-text">chapter1 基础问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter2-面向对象"><span class="nav-number">3.</span> <span class="nav-text">chapter2 面向对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#part1-类和对象"><span class="nav-number">3.1.</span> <span class="nav-text">part1 类和对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part2-封装"><span class="nav-number">3.2.</span> <span class="nav-text">part2 封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part3-继承"><span class="nav-number">3.3.</span> <span class="nav-text">part3 继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part4-多态"><span class="nav-number">3.4.</span> <span class="nav-text">part4 多态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#part5-在三大特性的基础上对类的一些补充"><span class="nav-number">3.5.</span> <span class="nav-text">part5 在三大特性的基础上对类的一些补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chapter-3-高级特性"><span class="nav-number">4.</span> <span class="nav-text">chapter 3 高级特性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程"><span class="nav-number">4.1.</span> <span class="nav-text">多线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java常用类"><span class="nav-number">4.2.</span> <span class="nav-text">java常用类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java集合"><span class="nav-number">4.3.</span> <span class="nav-text">java集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泛型-通配符"><span class="nav-number">4.4.</span> <span class="nav-text">泛型&#x2F;通配符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O"><span class="nav-number">4.5.</span> <span class="nav-text">I&#x2F;O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反射"><span class="nav-number">4.6.</span> <span class="nav-text">反射</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

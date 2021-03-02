@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hadoop框架," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="pro4:新的需要学的大数据框架之前使用hadoop都是伪分布式，这里配置了完全分布式hadoop：http:&#x2F;&#x2F;dblab.xmu.edu.cn&#x2F;blog&#x2F;2775-2&#x2F;启动在master节点上，指令如下：start-dfs.shstart-yarn.shmr-jobhistory-daemon.sh start historyserver #这个脚本的服务是实现web查看作业的历史运行情况 h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="新的需要学的大数据框架">
+<meta property="og:url" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="pro4:新的需要学的大数据框架之前使用hadoop都是伪分布式，这里配置了完全分布式hadoop：http:&#x2F;&#x2F;dblab.xmu.edu.cn&#x2F;blog&#x2F;2775-2&#x2F;启动在master节点上，指令如下：start-dfs.shstart-yarn.shmr-jobhistory-daemon.sh start historyserver #这个脚本的服务是实现web查看作业的历史运行情况 h">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219192921.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219201214.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219195255.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219204444.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219204605.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20201130141824.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20201125100458.png">
+<meta property="og:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20201130160824.png">
+<meta property="article:published_time" content="2020-11-30T10:56:20.000Z">
+<meta property="article:modified_time" content="2021-02-20T03:58:39.869Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="hadoop框架">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219192921.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/11/30/新的需要学的大数据框架/"/>
+
+
+
+
+
+  <title>新的需要学的大数据框架 | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">新的需要学的大数据框架</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-11-30T18:56:20+08:00">
+                2020-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%B5%E4%BF%A1%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%A1%88%E4%BE%8B/" itemprop="url" rel="index">
+                    <span itemprop="name">电信数据分析案例</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="pro4-新的需要学的大数据框架"><a href="#pro4-新的需要学的大数据框架" class="headerlink" title="pro4:新的需要学的大数据框架"></a>pro4:新的需要学的大数据框架</h2><p>之前使用hadoop都是伪分布式，这里配置了完全分布式hadoop：<a href="http://dblab.xmu.edu.cn/blog/2775-2/" target="_blank" rel="noopener">http://dblab.xmu.edu.cn/blog/2775-2/</a><br>启动在master节点上，指令如下：<br>start-dfs.sh<br>start-yarn.sh<br>mr-jobhistory-daemon.sh start historyserver #这个脚本的服务是实现web查看作业的历史运行情况</p>
+<h3 id="hbase"><a href="#hbase" class="headerlink" title="hbase"></a>hbase</h3><ul>
+<li>backup<ul>
+<li>性质：分布式列族数据库，建立在HDFS上，用于处理超大型数据集并且需要常量级随机读写操作</li>
+<li>优势<ul>
+<li>普通数据库：通常利用复制和分区来扩展数据库，但是这些是后天的设计，导致数据库很难运行和维持，当进行原有的操作比如：连接、复杂查询、触发器、视图等，拓展的RDBMS的运行时间难以接受</li>
+<li>Hbase：专门设计用来处理海量数据，通过增加节点可以实现数据库规模的线性增长(当然不支持sql笑)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>data model<ul>
+<li>e.g.<img src="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219192921.png" alt></li>
+<li>基本概念<ul>
+<li>rowkey：类似逐渐，byte数组，按byte-order排序</li>
+<li>列族<ul>
+<li>包括两部分——prefix：qualifier</li>
+<li>在数据处理的过程中可以动态添加qualifier，但是prefix需要提前定义(prefix其实就是列族)</li>
+<li>在底层存储中，列族成员内容存在同一个文件系统，因此hbase是基于列族存储的</li>
+</ul>
+</li>
+<li>cells、versions(…)每个cell保存多个versions的数据，由时间戳进行索引,byte数组，底层存储结构<img src="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219201214.png" alt></li>
+</ul>
+</li>
+<li>region：水平划分，由连续的行构成，不同的区域存放在不同的节点</li>
+</ul>
+</li>
+<li>具体实现<img src="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219195255.png" alt><ul>
+<li>region server:管理分区</li>
+<li>master:分配并管理regionServer，监控每个regionServer的状态、负载均衡和故障转移</li>
+<li>zookeeper<ul>
+<li>协调master和server的工作，记录hbase元数据的目录位置，meta中含有master/server的位置，这也是client读写的第一步<img src="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219204444.png" alt></li>
+<li>参与master分配server的过程，解决分配的过程出现的问题</li>
+</ul>
+</li>
+<li>hdfs：底层存储</li>
+<li>深入理解读写过程<ul>
+<li>region server的结构<img src="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20210219204605.png" alt></li>
+<li>WAL：全称Write Ahead Log， 属于分布式系统上的文件。主要用来存储还未被持久化到磁盘的新数据。如果新数据还未持久化，节点发生宕机，那么就可以用WAL来恢复这些数据</li>
+<li>BlockCache：是一个读缓存。它存储了被高频访问的数据。当这个缓存满了后，会清除最近最少访问的数据</li>
+<li>MemStore: 是一个写缓存。它存储了还未被写入磁盘的数据。它会在写入磁盘前，对自身数据进行排序，从而保证数据的顺序写入。每个region的每个colum family对应唯一的memstore</li>
+<li>HFiles：按照键值字典序存储数据</li>
+<li>写：WAL-&gt;MemStore-&gt;刷新-&gt;Hfile;读：BlockCache-&gt;MemStore-&gt;Hfile-&gt;返回所有版本合并后的数据</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="zooKeeper"><a href="#zooKeeper" class="headerlink" title="zooKeeper"></a>zooKeeper</h3><ul>
+<li>本质：为分布式应用提供协调服务。在分布式任务中，不同的节点存在信息差，所谓协调服务就是要解决这个问题，zookeeper提供一系列工具处理分布式应用中的partial failures</li>
+<li>特点<ul>
+<li>简单的文件系统，带有最基本的功能比如排序、通知</li>
+<li>功能强大，提供众多的的协调服务，比如构建分布式队列、选举leader</li>
+<li>高可用用：可以解决分布式程序中的单点故障问题，每个server保存一份相同的数据副本</li>
+<li>交互中转站：可以作为不同节点交互的中转站</li>
+<li>性能惊人：ZooKeeper集群的吞吐量基准是每秒超过10000次操作</li>
+<li>服务器集群：一个leader，多个follwer；只要有超过一办的服务器还在运行，zooKeeper就能正常运行</li>
+</ul>
+</li>
+<li>工作机制<ul>
+<li>基于观察者模式，接受服务器的注册和下线，维持当前服务器列表并且与客户端交互</li>
+<li>zookeeper数据模型可以看成一颗树，有统一的节点概念znode，每个znode由路径唯一标识</li>
+<li>运行过程中只要有超过一半的节点正常运行zookeeper就可以正常运行，节点分为leader和foller</li>
+</ul>
+</li>
+<li>应用场景：<ul>
+<li>统一命名 </li>
+<li>统一配置</li>
+<li>统一集群管理</li>
+<li>服务器动态上下线/软负载均衡</li>
+</ul>
+</li>
+<li>安装配置分布式zooKeeper,再次熟悉了xsync脚本<ul>
+<li>zoo.cfg/myid</li>
+</ul>
+</li>
+<li>服务器选举模式：<ul>
+<li>conf包含服务器和客户端的启动脚本</li>
+</ul>
+</li>
+<li>节点类型(临时？序列？)</li>
+<li>客户端shell指令<img src="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20201130141824.png" alt></li>
+<li>监听是zookeeper最核心的功能</li>
+</ul>
+<h3 id="flume"><a href="#flume" class="headerlink" title="flume"></a>flume</h3><ul>
+<li>关于flume本身：实时读取服务器本地磁盘数据，写入HDFS<ul>
+<li>逻辑架构：<img src="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20201125100458.png" alt></li>
+<li>agent架构：<img src="/2020/11/30/%E6%96%B0%E7%9A%84%E9%9C%80%E8%A6%81%E5%AD%A6%E7%9A%84%E5%A4%A7%E6%95%B0%E6%8D%AE%E6%A1%86%E6%9E%B6/QQ%E6%88%AA%E5%9B%BE20201130160824.png" alt></li>
+</ul>
+</li>
+<li>一些练习:<ul>
+<li>监听端口数据，打印到控制台<ul>
+<li>bin/flume-ng agent -c conf/ -n a1 -f job/flume-netcat-logger.conf -Dflume.root.logger=INFO,console</li>
+<li>nc localhost 44444</li>
+</ul>
+</li>
+<li>监控hive日志，上传到HDFS中<ul>
+<li>Flume 要想将数据输出到HDFS，须持有Hadoop 相关jar 包</li>
+<li>配置文件复杂了起来</li>
+<li>flume中guava包和hadoop的版本冲突</li>
+</ul>
+</li>
+<li>使用Flume 监听整个目录的文件，并上传至HDFS</li>
+<li>实时监控目录下的多个追加文件</li>
+</ul>
+</li>
+</ul>
+<h3 id="kafka"><a href="#kafka" class="headerlink" title="kafka"></a>kafka</h3><ul>
+<li>关于kafka本身：分布式的基于发布/订阅模式的消息队列，用于大数据实时处理领域</li>
+<li>kafka的安装与配置，启动前需要先启动zookeeper</li>
+<li>在/usr/local/bin存放启动/关闭kafka集群脚本<ul>
+<li>学会用脚本管理kafka、zookeeper</li>
+</ul>
+</li>
+<li>在新版本中–zookeeper已经被–bootstrap-server代替，端口也由之前的zookeeper通信端口2181，改为了kafka通信端口9092</li>
+</ul>
+<h3 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h3><ul>
+<li>flume和kafka的理解还不够，先用着</li>
+</ul>
+<h2 id="hbase协处理器-……"><a href="#hbase协处理器-……" class="headerlink" title="hbase协处理器(……)"></a>hbase协处理器(……)</h2><h2 id="bug"><a href="#bug" class="headerlink" title="bug"></a>bug</h2><p>kafka采集的数据有问题</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop%E6%A1%86%E6%9E%B6/" rel="tag"># hadoop框架</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/11/30/%E5%AE%9E%E9%AA%8C%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E5%87%BA%E7%8E%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98/" rel="next" title="实验过程中生产环境出现的一些问题">
+                <i class="fa fa-chevron-left"></i> 实验过程中生产环境出现的一些问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/11/30/%E9%A1%B9%E7%9B%AE%E6%A1%86%E6%9E%B6/" rel="prev" title="项目框架">
+                项目框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pro4-新的需要学的大数据框架"><span class="nav-number">1.</span> <span class="nav-text">pro4:新的需要学的大数据框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hbase"><span class="nav-number">1.1.</span> <span class="nav-text">hbase</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zooKeeper"><span class="nav-number">1.2.</span> <span class="nav-text">zooKeeper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flume"><span class="nav-number">1.3.</span> <span class="nav-text">flume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kafka"><span class="nav-number">1.4.</span> <span class="nav-text">kafka</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些思考"><span class="nav-number">1.5.</span> <span class="nav-text">一些思考</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hbase协处理器-……"><span class="nav-number">2.</span> <span class="nav-text">hbase协处理器(……)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bug"><span class="nav-number">3.</span> <span class="nav-text">bug</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

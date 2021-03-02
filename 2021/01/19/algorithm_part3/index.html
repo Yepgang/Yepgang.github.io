@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="algorithm," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="lecture 12 Network Flow II 之前已经研究过maxflow问题了，这里学习几个更棒的算法,在最后提出min-cost max flow problem Edmonds-Karp Algorithm #1 不同于Ford-Fulkerson algorithm之前每次找任意一个残差图中的s-t路径，这里试图寻找maximum bottleneck path，即流量最大的s-t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="algorithm_part3">
+<meta property="og:url" content="http://yoursite.com/2021/01/19/algorithm_part3/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="lecture 12 Network Flow II 之前已经研究过maxflow问题了，这里学习几个更棒的算法,在最后提出min-cost max flow problem Edmonds-Karp Algorithm #1 不同于Ford-Fulkerson algorithm之前每次找任意一个残差图中的s-t路径，这里试图寻找maximum bottleneck path，即流量最大的s-t">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119172001.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119172224.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119191616.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119212452.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202224.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202330.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202339.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202529.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202639.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202853.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120203644.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120205025.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120205046.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120205426.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210129111228.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120211238.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120211238.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120222714.png">
+<meta property="og:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120222722.png">
+<meta property="article:published_time" content="2021-01-19T07:16:20.000Z">
+<meta property="article:modified_time" content="2021-01-29T12:17:13.020Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119172001.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/01/19/algorithm_part3/"/>
+
+
+
+
+
+  <title>algorithm_part3 | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2021/01/19/algorithm_part3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">algorithm_part3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-01-19T15:16:20+08:00">
+                2021-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cmu-course/" itemprop="url" rel="index">
+                    <span itemprop="name">cmu_course</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="lecture-12-Network-Flow-II"><a href="#lecture-12-Network-Flow-II" class="headerlink" title="lecture 12 Network Flow II"></a>lecture 12 Network Flow II</h2><ul>
+<li>之前已经研究过maxflow问题了，这里学习几个更棒的算法,在最后提出min-cost max flow problem</li>
+<li>Edmonds-Karp Algorithm #1<ul>
+<li>不同于Ford-Fulkerson algorithm之前每次找任意一个残差图中的s-t路径，这里试图寻找maximum bottleneck path，即流量最大的s-t路径</li>
+<li>该算法迭代次数的限制<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119172001.png" alt></li>
+<li>至于寻找maximum bottleneck path有两种思路<ul>
+<li>使用Dijkstra寻找真正的maximum bottleneck path:Dijkstra’s algorithm can be trivially modified to find such paths. Instead of keeping tentative distance values in the priority queue, we keep maximum bottleneck values. The running time is the same as Dijkstra’s</li>
+<li>使用dfs寻找近似的maximum bottleneck path:find the largest power of 2 (let’s call it c = $2^i$) such that there exists a path from s to t in G of capacity at least c</li>
+</ul>
+</li>
+<li>对应的时间复杂度<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119172224.png" alt></li>
+</ul>
+</li>
+<li>Edmonds-Karp Algorithm #2<ul>
+<li>The Edmonds-Karp #2 algorithm works by always picking the shortest path in the residual graph(the one with the fewest number of edges), rather than the path of maximum capacity. This sounds a little funny but the claim is that by doing so, the algorithm makes at most mn iterations. So,the running time is <strong>O($nm^2$)</strong> since we can use <strong>BFS</strong> in each iteration. The proof is pretty neat too</li>
+<li>该算法迭代次数的限制<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119191616.png" alt></li>
+</ul>
+</li>
+<li>Dinic’s Algorithm<ul>
+<li>improve this algorithm to <strong>O($n^2$m)</strong> by reorganizing the computation</li>
+<li>在Edmond Karp中，我们仅发送通过BFS所找路径发送的流,而在Dinic算法中，我们使用BFS来检查是否有可能有更多的流量，并构造level graph，一旦构建了level 图，我们就可以使用该level图以及dfs发送多个流(即所谓的blocking flow，而且这里的flow要求流向更高的等级)</li>
+<li>本质：在Edmond Karp中，每次选择一条最短边数d的路径，然后作迭代过程，d只增不减，而在这里，每次选择所有边数最短的路径，迭代过程更快。在dfs过程中，复杂度是mn，每次迭代d都会增加，最多迭代n次，所以时间复杂度为<strong>O($n^2$m)</strong></li>
+</ul>
+</li>
+<li>Min-cost Max Flows<ul>
+<li>最小费用最大流就是在最大流不唯一时，求cost(每条路径有固定的cost)最小的方案，基本思想是在最大流的基础上考虑费用最小<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210119212452.png" alt></li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-13-Hashing"><a href="#lecture-13-Hashing" class="headerlink" title="lecture 13 Hashing"></a>lecture 13 Hashing</h2><ul>
+<li>basic<ul>
+<li>作用：解决(key,vaule)的插入和查询问题</li>
+<li>几个概念<ul>
+<li>Keys come from some large universe U. (E.g, think of U as the set of all strings of at most 80 ASCII characters.)</li>
+<li>There is some set S in U of keys we actually care about (which may be static or dynamic). Let N = |S|. </li>
+<li>We will perform inserts and lookups by having an array A of some size M, and <strong>a hash function h</strong> : U → {0, . . . , M − 1}. Given an element x, the idea of hashing is we want to store it in A[h(x)]. Note that if U was small (like 2-character strings) then you could just store x in A[x] like in bucketsort. The problem is that U is big: that is why we need the hash function.</li>
+<li>We need a method for resolving collisions. A collision is when h(x) = h(y) for two different keys x and y. For this lecture, we will handle collisions by having each entry in A be a linked list. There are a number of other methods, but for the issues we will be focusing on here, this is the cleanest. This method is called <strong>separate chaining</strong>. To insert an element, we just put it at the top of the list. If h is a good hash function, then our hope is that the lists will be small.</li>
+<li><strong>The question we now turn to is: what do we need for a hashing scheme to achieve good performance?</strong><ul>
+<li>减少hash冲突(比如在separate chaining方法下，控制链表的长度是关键)+h不能过于复杂+m不能太大</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>结论<ul>
+<li>For any hash function h, if |U| ≥ (N −1)M + 1, there exists a set S of N elements that all hash to the same location</li>
+<li>这意味着对所有的h我们都能找出一个最坏的反例，所以关键的地方在于<strong>let’s use randomization in our construction of h</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Universal Hashing<ul>
+<li>定义<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202224.png" alt></li>
+<li>优点<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202330.png" alt>)<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202339.png" alt></li>
+<li>the matrix method<ul>
+<li>将key看成二进制数字,这里M=$2^m$<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202529.png" alt></li>
+<li>L-universal problem<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202639.png" alt></li>
+</ul>
+</li>
+<li>Another method for universal hashing<ul>
+<li>view the key x as a vector of integers [x1, x2, . . . , xk] with the only requirement being that each xiis in the range {0,1, . . . , M −1}<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120202853.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Perfect Hashing<ul>
+<li>The next question we consider is: if we fix the set S (the dictionary), can we find a hash function h such that all lookups are constant time (not in expectation)? We say a hash function is perfect for S if all lookups involve O(1) work</li>
+<li>Method 1: an O(N2)-space solution<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120203644.png" alt><ul>
+<li>So, we just try a random h from H, and if we got any collisions, we just pick a new h. On average, we will only need to do this twice. </li>
+</ul>
+</li>
+<li>Method 2: an O(N)-space solution<ul>
+<li>太牛逼了<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120205025.png" alt>)<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120205046.png" alt>)<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120205426.png" alt></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="lecture-14-Fingerprinting-and-String-Matching"><a href="#lecture-14-Fingerprinting-and-String-Matching" class="headerlink" title="lecture 14 Fingerprinting and String Matching"></a>lecture 14 Fingerprinting and String Matching</h2><ul>
+<li>basic<ul>
+<li>利用prime的数学性质解决字符串/数字的匹配问题</li>
+</ul>
+</li>
+<li>how to pick a random prime<ul>
+<li>简单的思路<ul>
+<li>从[1,M]选取一个随机的整数X,重复知道X是一个素数</li>
+</ul>
+</li>
+<li>选取随机的整数可以随机生成一个长度为$log_2m + 1$的<strong>二进制字符串</strong>，我们有1/2的可能性得到小于m的整数</li>
+<li>判断X为素数，两个方向，都是利用素数的性质判断X是否为素数，一种是必要条件，不保证百分百得到素数(这是本节课程探讨内容的重要思想），一种是充分条件，得到的一定是素数<ul>
+<li>Miller-Rabin randomized primality test</li>
+<li>Agrawal-Kayal-Saxena primality test</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>how many primes<ul>
+<li>For positive integer n, how many primes are there in the set {1,2, . . . , n}?</li>
+<li>这里给出了一个范围和推论<ul>
+<li>$num_n&gt;=n/lg_n$</li>
+<li>f we want at least k ≥ 4 primes between 1 and n, it suffices to have n ≥ 2klgk</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The String Equality Problem<ul>
+<li>当字符串比较长时，如何判断字符串是否相等，这里假设字符串为N-bit binary numbers</li>
+<li>M = 2 · (5N) · lg(5N)，选取p</li>
+<li>比较二者mod p是否相等</li>
+<li>由上述推论得二者不等得概率&lt;=0.2<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210129111228.png" alt></li>
+<li>如果重复10次概率&lt;=$(0.2)^5$</li>
+</ul>
+</li>
+<li>The Karp-Rabin Algorithm (a.k.a. the “Fingerprint” Method)<ul>
+<li>用来判断text T(长度为m)是否包含模式P(n)</li>
+<li>Pick a random prime p in the range {1, . . . , M} for a M = 2snlg(sn) </li>
+<li>然后调用(m-n)次比较mod p的方法</li>
+<li>Probability of Error:m/s</li>
+<li>O(m + n) time</li>
+</ul>
+</li>
+</ul>
+<h2 id="homework"><a href="#homework" class="headerlink" title="homework"></a>homework</h2><ul>
+<li>L-universal problem<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120211238.png" alt></li>
+<li>min-cost maxflow<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120211238.png" alt>)<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120222714.png" alt>)<img src="/2021/01/19/algorithm_part3/QQ%E6%88%AA%E5%9B%BE20210120222722.png" alt></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/15/algorithm_part2/" rel="next" title="algorithm_part2">
+                <i class="fa fa-chevron-left"></i> algorithm_part2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2021/02/02/20210226_%E5%88%98%E8%83%9C_%E6%B1%87%E6%8A%A5/" rel="prev" title="20210226_刘胜_汇报">
+                20210226_刘胜_汇报 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-12-Network-Flow-II"><span class="nav-number">1.</span> <span class="nav-text">lecture 12 Network Flow II</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-13-Hashing"><span class="nav-number">2.</span> <span class="nav-text">lecture 13 Hashing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lecture-14-Fingerprinting-and-String-Matching"><span class="nav-number">3.</span> <span class="nav-text">lecture 14 Fingerprinting and String Matching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#homework"><span class="nav-number">4.</span> <span class="nav-text">homework</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

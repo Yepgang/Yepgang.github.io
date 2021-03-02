@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MIT," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="大多数shell都有自己的一套脚本语言，包括变量、控制流和自己的语法。shell脚本与其他脚本语言不同之处在于，shell脚本针对shell所从事的相关工作进行来优化。因此，创建命令流程（pipelines）、将结果保存到文件、从标准输入中读取输入，这些都是shell脚本中的原生操作，这让它比通用的脚本语言更易用。本节中，我们会专注于bash脚本，因为它最流行，应用更为广泛。 关于bash 在sh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell工具和脚本">
+<meta property="og:url" content="http://yoursite.com/2020/12/19/Shell%E5%B7%A5%E5%85%B7%E5%92%8C%E8%84%9A%E6%9C%AC/index.html">
+<meta property="og:site_name" content="Three Kilometers">
+<meta property="og:description" content="大多数shell都有自己的一套脚本语言，包括变量、控制流和自己的语法。shell脚本与其他脚本语言不同之处在于，shell脚本针对shell所从事的相关工作进行来优化。因此，创建命令流程（pipelines）、将结果保存到文件、从标准输入中读取输入，这些都是shell脚本中的原生操作，这让它比通用的脚本语言更易用。本节中，我们会专注于bash脚本，因为它最流行，应用更为广泛。 关于bash 在sh">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-19T08:22:20.000Z">
+<meta property="article:modified_time" content="2020-12-20T10:06:19.467Z">
+<meta property="article:author" content="Sheng Liu">
+<meta property="article:tag" content="MIT">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/12/19/Shell工具和脚本/"/>
+
+
+
+
+
+  <title>Shell工具和脚本 | Three Kilometers</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Three Kilometers</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/12/19/Shell%E5%B7%A5%E5%85%B7%E5%92%8C%E8%84%9A%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Sheng Liu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Three Kilometers">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Shell工具和脚本</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-12-19T16:22:20+08:00">
+                2020-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E7%A8%8B%E8%83%BD%E5%8A%9B/" itemprop="url" rel="index">
+                    <span itemprop="name">工程能力</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>大多数shell都有自己的一套脚本语言，包括变量、控制流和自己的语法。shell脚本与其他脚本语言不同之处在于，shell脚本针对shell所从事的相关工作进行来优化。因此，创建命令流程（pipelines）、将结果保存到文件、从标准输入中读取输入，这些都是shell脚本中的原生操作，这让它比通用的脚本语言更易用。本节中，我们会专注于bash脚本，因为它最流行，应用更为广泛。</p>
+<h2 id="关于bash"><a href="#关于bash" class="headerlink" title="关于bash"></a>关于bash</h2><ul>
+<li>在shell脚本中使用空格会起到分割参数的作用，有时候可能会造成混淆</li>
+<li>以’定义的字符串为原义字符串，其中的变量不会被转义，而 “定义的字符串会将变量值进行替换，默认为”</li>
+<li>bash使用了很多特殊变量来表示参数、错误代码和相关变量<ul>
+<li>$0 脚本名</li>
+<li>$1 到 $9 - 脚本到参数。 $1 是第一个参数，依此类推。</li>
+<li>$@ - 所有参数</li>
+<li>$# - 参数个数</li>
+<li>$? - 前一个命令的返回值</li>
+<li>$$ - 当前脚本的进程识别码</li>
+<li>!! - 完整的上一条命令，包括参数。常见应用：当你因为权限不足执行命令失败时，可以使用 sudo !!再尝试一次。</li>
+<li>$_ - 上一条命令的最后一个参数。如果你正在使用的是交互式shell，你可以通过按下 Esc 之后键入 . 来获取这个值。</li>
+</ul>
+</li>
+<li>返回值0表示正常执行，其他所有非0的返回值都表示有错误发生，可以搭配&amp;&amp;和||使用。</li>
+<li>同一行的多个命令可以用 ; 分隔</li>
+<li>command substitution：$(cmd)</li>
+<li>在bash中进行比较时，尽量使用双方括号 [[ ]] 而不是单方括号 [ ]，这样会降低犯错的几率，尽管这样并不能兼容sh</li>
+<li>? 和 * 来匹配一个或任意个字符</li>
+<li>花括号{}:当你有一系列的指令，其中包含一段公共子串时，可以用花括号来自动展开这些命令<ul>
+<li>mv *{.py,.sh} folder(会移动所有 *.py 和 *.sh 文件)</li>
+<li>touch {foo,bar}/{a..h}(创建foo/a, foo/b, … foo/h, bar/a, bar/b, … bar/h这些文件)</li>
+</ul>
+</li>
+<li>函数只能用与shell使用相同的语言，脚本可以使用任意语言(脚本第一行定义命令解释器)</li>
+<li>函数会在当前的shell环境中执行，脚本会在单独的进程中执行。因此，函数可以对环境变量进行更改，比如改变当前工作目录，脚本则不行</li>
+<li>tldr:simple man tec</li>
+</ul>
+<h2 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h2><p>Linux系统预留可三个文件描述符：0、1和2，他们的意义如下所示：</p>
+<ul>
+<li>0——标准输入（stdin）</li>
+<li>1——标准输出（stdout）</li>
+<li>2——标准错误（stderr）<ul>
+<li>grep foobar $file &gt; /dev/null 2&gt; /dev/null(将标准输出流和标准错误流重定向到Null)</li>
+<li>ls e.txt 2&gt;g.txt</li>
+</ul>
+</li>
+</ul>
+<p>##　查找文件</p>
+<ul>
+<li>find path -name -path -type -size -{m,a,c}time -exec -depth<ul>
+<li>功能最全，相对最复杂</li>
+</ul>
+</li>
+<li>fd patten path(default current dir) –exec</li>
+<li>locate:查询系统上预建的文件索引数据库(/var/lib/mlocate/mlocate.db)<ul>
+<li>速度最快的非实时查询</li>
+<li>find 和类似的工具可以通过别的属性比如文件大小、修改时间或是权限来查找文件，locate则只能通过文件名</li>
+</ul>
+</li>
+</ul>
+<h2 id="查找代码"><a href="#查找代码" class="headerlink" title="查找代码"></a>查找代码</h2><ul>
+<li>与 find/fd 一样，重要的是你要知道有些问题使用合适的工具就会迎刃而解，而具体选择哪个工具则不是那么重要</li>
+<li>一般用grep</li>
+</ul>
+<h2 id="查找shell命令"><a href="#查找shell命令" class="headerlink" title="查找shell命令"></a>查找shell命令</h2><ul>
+<li>history,可以配合grep</li>
+<li>crtl+r，反复crtl+r反向搜索</li>
+<li>默认shell为bash</li>
+<li>其他的shell：zsh fzf fish(之后考虑)</li>
+</ul>
+<h2 id="文件夹导航"><a href="#文件夹导航" class="headerlink" title="文件夹导航"></a>文件夹导航</h2><ul>
+<li>alias</li>
+<li>fasd:在内部维护一个表，记录着最近操作的每个文件/目录的路径，以及他们的权重。这个权重会随着你操作这个目录的次数而增加，所以在使用关键字匹配路径时，最常用的路径就会被选中</li>
+<li>内置别名<ul>
+<li>alias a=’fasd -a’        # any</li>
+<li>alias s=’fasd -si’       # show / search / select</li>
+<li>alias d=’fasd -d’        # directory</li>
+<li>alias f=’fasd -f’        # file</li>
+<li>alias sd=’fasd -sid’     # interactive directory selection</li>
+<li>alias sf=’fasd -sif’     # interactive file selection</li>
+<li>alias z=’fasd_cd -d’     # cd, same functionality as j in autojump</li>
+<li>alias zz=’fasd_cd -d -i’ # cd with interactive selection</li>
+</ul>
+</li>
+<li>使用方法<ul>
+<li>a foo 列出最近操作的路径匹配’foo’的文件与目录</li>
+<li>f foo 列出最近操作的路径匹配’foo’的文件</li>
+<li>f foo -e vim 打开…</li>
+<li>d foo 列出最近操作的路径匹配’foo’的目录</li>
+<li>s foo 列出最近操作的路径匹配’foo’的文件与目录，并可以通过序号选择</li>
+<li>sf foo 列出最近操作的路径匹配’foo’的文件，并可以通过序号选择</li>
+<li>sd foo 列出最近操作的路径匹配’foo’的目录，并可以通过序号选择</li>
+<li>z foo cd到最近操作的匹配’foo’并且得分最高的目录</li>
+<li>zz foo 列出最近操作的路径匹配’foo’的目录，通过序号选择，然后cd进目录</li>
+</ul>
+</li>
+</ul>
+<h2 id="课后习题"><a href="#课后习题" class="headerlink" title="课后习题"></a>课后习题</h2><ul>
+<li>ls<ul>
+<li>a/d/l/c/h(可读)</li>
+<li>–block-size/–color/S(s,t,r)</li>
+</ul>
+</li>
+<li>source执行shell脚本，只用source一次</li>
+<li>function定义函数</li>
+<li>这边都是bash的语法，dash无法识别[[]],抬头要写清楚bash路径;注意$/;的使用；</li>
+<li>xargs<ul>
+<li>find . -name “*.html” -print0 | xargs -0 zip -r html.zip</li>
+<li>Ubuntu下的文件名是可以包含空格的，所以find的输出，若还是以空格相隔的话，输入到后续指令中会出错</li>
+<li>find -print0告诉管道工具“|”：现在用一个Null字符来分隔文件名,xargs对应的加了一个”-0”的参数，表示自己只会以Null字符来分隔接受到的文件名列表</li>
+</ul>
+</li>
+<li>find / -type f -atime -1 -print0|xargs -0 ls -lt|head -10</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MIT/" rel="tag"># MIT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/19/The%20Missing%20Semester%20of%20Your%20CS%20Education/" rel="next" title="The Missing Semester of Your CS Education">
+                <i class="fa fa-chevron-left"></i> The Missing Semester of Your CS Education
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/12/21/%E7%BC%96%E8%BE%91%E5%99%A8(Vim)/" rel="prev" title="编辑器(Vim)">
+                编辑器(Vim) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="Sheng Liu" />
+            
+              <p class="site-author-name" itemprop="name">Sheng Liu</p>
+              <p class="site-description motion-element" itemprop="description">i need to punch!</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Yepgang" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=cUNDSEFDREFARkcxAABfEh4c" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于bash"><span class="nav-number">1.</span> <span class="nav-text">关于bash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件描述符"><span class="nav-number">2.</span> <span class="nav-text">文件描述符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找代码"><span class="nav-number">3.</span> <span class="nav-text">查找代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找shell命令"><span class="nav-number">4.</span> <span class="nav-text">查找shell命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件夹导航"><span class="nav-number">5.</span> <span class="nav-text">文件夹导航</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#课后习题"><span class="nav-number">6.</span> <span class="nav-text">课后习题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sheng Liu</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
